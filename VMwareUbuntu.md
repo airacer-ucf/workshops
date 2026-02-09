@@ -2,6 +2,7 @@
 
 **Platforms:** Windows, macOS (Intel chips), macOS (Apple Silicon chips)
 
+> **Note that for the purpose of our workshops, if you have `Ubuntu 22.04` installed through other methods, such as WSL, Other Virtual Machine, Dual Boot, or Native Ubuntu 22.04, then it is not necessary to use this Virtual Machine**
 ---
 
 ## Objective
