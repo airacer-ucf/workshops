@@ -1,4 +1,4 @@
-## Workshop 1 - Intro to ROS2
+## Workshop 1 - Intro to ROS 2
 
 ### Prerequisites
 
