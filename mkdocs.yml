@@ -1,4 +1,4 @@
-site_name: My Docs
+site_name: AI Racer Workshops
 theme:
   name: material
   features:
@@ -8,3 +8,6 @@ theme:
 markdown_extensions:
   - toc:
       permalink: true
+nav:
+  - Home: index.md
+  - Other Page: other-page.md
