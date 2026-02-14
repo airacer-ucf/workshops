@@ -1,4 +1,4 @@
-# Intro to ROS2 Workshop
+# Intro to ROS 2 Workshop Manual
 
 ## Review ROS2 Fundamentals
 
@@ -24,13 +24,13 @@ ros2_ws/
 └── log/              # Build and runtime logs
 ```
 
-# **Part 0 - Environment Setup & Workspace**
+## **Part 0 - Environment Setup & Workspace**
 
-## Objective
+### Objective
 
 **Build and run a ROS 2 workspace**.
 
-## Tasks
+### Tasks
 
 1. Source your ROS 2 installation if not automatically done already:
 
@@ -46,22 +46,22 @@ ros2_ws/
    source install/setup.bash
    ```
 
-## Checkpoint
+### Checkpoint
 
 * `ros2 pkg list` runs without errors
 
 ---
 
-# **Part 1 (Difficulty: 2) - Publisher & Subscriber Nodes**
+## **Part 1 (Difficulty: 2) - Publisher & Subscriber Nodes**
 
-## Objective
+### Objective
 
 Understand **nodes, topics, and messages** through hands-on implementation.
 
 
-## **Python Publisher-Subscriber Implementation**
+### **Python Publisher-Subscriber Implementation**
 
-### **Step 1: Create Python Package**
+#### **Step 1: Create Python Package**
 
 1. **In the ROS2 workspace you created, Navigate to the `src/` directory:**
    ```bash
@@ -96,7 +96,7 @@ Understand **nodes, topics, and messages** through hands-on implementation.
 
 ---
 
-### **Step 2: Write the Publisher Node**
+#### **Step 2: Write the Publisher Node**
 
 In the `my_python_pkg` folder, create a file named `simple_publisher.py`, which will be the publisher node.
 
@@ -163,7 +163,7 @@ if __name__ == '__main__':
 
 ---
 
-### **Step 3: Write the Subscriber Node**
+#### **Step 3: Write the Subscriber Node**
 
 Create the subscriber node as `simple_subscriber.py`.
 
@@ -234,7 +234,7 @@ if __name__ == '__main__':
 
 ---
 
-### **Step 4: Update the Setup Configuration**
+#### **Step 4: Update the Setup Configuration**
 
 Modify `setup.py` to point to your nodes.
 
@@ -267,7 +267,7 @@ setup(
 
 ---
 
-### **Step 5: Build and Source the Package**
+#### **Step 5: Build and Source the Package**
 
 Go to the workspace root, build the package, and source it:
 
@@ -281,25 +281,25 @@ source install/setup.bash
 
 ---
 
-### **Step 6: Run the Nodes**
+#### **Step 6: Run the Nodes**
 
 In two separate terminals, run the publisher and subscriber:
 
-#### Terminal 1: Publisher
+##### Terminal 1: Publisher
 
 ```bash
 source ~/ros2_ws/install/setup.bash
 ros2 run my_python_pkg simple_publisher
 ```
 
-#### Terminal 2: Subscriber
+##### Terminal 2: Subscriber
 
 ```bash
 source ~/ros2_ws/install/setup.bash
 ros2 run my_python_pkg simple_subscriber
 ```
 
-#### Expected Output
+##### Expected Output
 
 - **Publisher Terminal:**
 
@@ -319,13 +319,13 @@ ros2 run my_python_pkg simple_subscriber
 
 ---
 
-# **Part 2 (Difficulty: 1) - ROS 2 CLI Introspection**
+## **Part 2 (Difficulty: 1) - ROS 2 CLI Introspection**
 
-## Objective
+### Objective
 
 Learn how to **debug and inspect live systems**
 
-## Tasks
+### Tasks
 
 With your nodes running, open a new terminal and execute:
 
@@ -363,15 +363,15 @@ With your nodes running, open a new terminal and execute:
 
 ---
 
-# **Part 3 (Difficulty: 4) - Custom Message Types**
+## **Part 3 (Difficulty: 4) - Custom Message Types**
 
-## Overview
+### Overview
 
 Custom message types allow you to define your own data structures for communication between nodes. Instead of using only standard messages like String or Float32, you can create messages that bundle multiple fields together, making your code more organized and meaningful.
 
-## Understanding Custom Messages
+### Understanding Custom Messages
 
-### Why Use Custom Messages?
+#### Why Use Custom Messages?
 
 **Standard Message:**
 ```python
@@ -394,9 +394,9 @@ Custom messages are more **descriptive**, **organized**, and **maintainable** fo
 
 ---
 
-## Creating a Custom Message - Step by Step
+### Creating a Custom Message - Step by Step
 
-### Step 1: Create a Package for Custom Messages
+#### Step 1: Create a Package for Custom Messages
 
 It's best practice to create a separate package for custom messages so multiple packages can use them.
 
@@ -407,7 +407,7 @@ ros2 pkg create my_custom_msgs --build-type ament_cmake
 
 **Why `ament_cmake`?** Message generation requires CMake build system, even if your nodes are in Python.
 
-### Step 2: Create Message Directory and File
+#### Step 2: Create Message Directory and File
 
 ```bash
 cd ~/ros2_ws/src/my_custom_msgs
@@ -433,7 +433,7 @@ builtin_interfaces/Time timestamp  # Timestamp of the measurement
 - Arrays: `float32[]` (dynamic), `float32[5]` (fixed size)
 - Other messages: `builtin_interfaces/Time`, `std_msgs/Header`
 
-### Step 3: Update package.xml
+#### Step 3: Update package.xml
 
 Add the required dependencies to `~/ros2_ws/src/my_custom_msgs/package.xml`:
 
@@ -466,7 +466,7 @@ Add the required dependencies to `~/ros2_ws/src/my_custom_msgs/package.xml`:
 </package>
 ```
 
-### Step 4: Update CMakeLists.txt
+#### Step 4: Update CMakeLists.txt
 
 Update `~/ros2_ws/src/my_custom_msgs/CMakeLists.txt`:
 
@@ -497,7 +497,7 @@ endif()
 ament_package()
 ```
 
-### Step 5: Build the Message Package
+#### Step 5: Build the Message Package
 
 ```bash
 cd ~/ros2_ws
@@ -513,7 +513,7 @@ Finished <<< my_custom_msgs [5.23s]
 Summary: 1 package finished [5.67s]
 ```
 
-### Step 6: Verify Message Creation
+#### Step 6: Verify Message Creation
 
 Check that your message was created:
 
@@ -533,9 +533,9 @@ builtin_interfaces/Time timestamp
 
 ---
 
-## Using Custom Messages in Python Nodes
+### Using Custom Messages in Python Nodes
 
-### Step 1: Update Python Package Dependencies
+#### Step 1: Update Python Package Dependencies
 
 Update `~/ros2_ws/src/my_python_pkg/package.xml` to add the custom message dependency:
 
@@ -564,7 +564,7 @@ Update `~/ros2_ws/src/my_python_pkg/package.xml` to add the custom message depen
 </package>
 ```
 
-### Step 2: Create Custom Message Publisher
+#### Step 2: Create Custom Message Publisher
 
 **File:** `~/ros2_ws/src/my_python_pkg/my_python_pkg/custom_publisher.py`
 
@@ -639,7 +639,7 @@ if __name__ == '__main__':
     main()
 ```
 
-### Step 3: Create Custom Message Subscriber
+#### Step 3: Create Custom Message Subscriber
 
 **File:** `~/ros2_ws/src/my_python_pkg/my_python_pkg/custom_subscriber.py`
 
@@ -724,7 +724,7 @@ if __name__ == '__main__':
     main()
 ```
 
-### Step 4: Update setup.py
+#### Step 4: Update setup.py
 
 Update `~/ros2_ws/src/my_python_pkg/setup.py` to include the new executables:
 
@@ -760,7 +760,7 @@ setup(
 )
 ```
 
-### Step 5: Build and Test
+#### Step 5: Build and Test
 
 ```bash
 cd ~/ros2_ws
@@ -806,15 +806,15 @@ ros2 run my_python_pkg custom_subscriber
 
 ---
 
-# **Part 4 (Difficulty: 3) - Launch Files (Multi-Node Systems)**
+## **Part 4 (Difficulty: 3) - Launch Files (Multi-Node Systems)**
 
-## Overview
+### Overview
 
 Launch files allow you to start multiple nodes simultaneously with a single command. Instead of opening multiple terminals and running each node individually, you can configure and launch your entire system at once. This is essential for complex robotic systems
 
-## Understanding Launch Files
+### Understanding Launch Files
 
-### Why Use Launch Files?
+#### Why Use Launch Files?
 
 **Without Launch Files:**
 ```bash
@@ -837,7 +837,7 @@ ros2 run my_python_pkg custom_subscriber
 ros2 launch my_python_pkg all_nodes_launch.py
 ```
 
-### Benefits of Launch Files:
+#### Benefits of Launch Files:
 - Start multiple nodes with one command
 - Configure parameters for nodes
 - Set remapping rules for topics
@@ -847,16 +847,16 @@ ros2 launch my_python_pkg all_nodes_launch.py
 
 ---
 
-## Python Launch Files
+### Python Launch Files
 
-### Step 1: Create Launch Directory
+#### Step 1: Create Launch Directory
 
 ```bash
 cd ~/ros2_ws/src/my_python_pkg
 mkdir launch
 ```
 
-### Step 2: Create Simple Launch File
+#### Step 2: Create Simple Launch File
 
 **File:** `~/ros2_ws/src/my_python_pkg/launch/simple_nodes_launch.py`
 
@@ -896,7 +896,7 @@ def generate_launch_description():
 - `emulate_tty=True`: Ensures colored output and proper formatting
 
 
-### Step 3: Create Custom Messages Launch File
+#### Step 3: Create Custom Messages Launch File
 
 **File:** `~/ros2_ws/src/my_python_pkg/launch/custom_nodes_launch.py`
 
@@ -928,7 +928,7 @@ def generate_launch_description():
     ])
 ```
 
-### Step 4: Create Comprehensive Launch File (All Nodes)
+#### Step 4: Create Comprehensive Launch File (All Nodes)
 
 **File:** `~/ros2_ws/src/my_python_pkg/launch/all_nodes_launch.py`
 
@@ -993,7 +993,7 @@ def generate_launch_description():
     ])
 ```
 
-### Step 5: Update setup.py to Include Launch Files
+#### Step 5: Update setup.py to Include Launch Files
 
 **File:** `~/ros2_ws/src/my_python_pkg/setup.py`
 
@@ -1034,7 +1034,7 @@ setup(
 )
 ```
 
-### Step 6: Update package.xml for Launch Dependencies
+#### Step 6: Update package.xml for Launch Dependencies
 
 **File:** `~/ros2_ws/src/my_python_pkg/package.xml`
 
@@ -1078,7 +1078,7 @@ Complete package.xml should look like:
 </package>
 ```
 
-### Step 7: Build and Test Launch Files
+#### Step 7: Build and Test Launch Files
 
 ```bash
 cd ~/ros2_ws
@@ -1086,7 +1086,7 @@ colcon build --packages-select my_python_pkg
 source install/setup.bash
 ```
 
-### Step 8: Run Launch Files
+#### Step 8: Run Launch Files
 
 **Launch simple nodes only:**
 ```bash
@@ -1139,7 +1139,7 @@ ros2 launch my_python_pkg all_nodes_launch.py
 
 ---
 
-# Practice: Multi-Node Communication System - Data Processing Pipeline
+## Practice: Multi-Node Communication System - Data Processing Pipeline
 
 Design and implement a simple multi-node system with the following architecture:
 
