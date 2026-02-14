@@ -1,4 +1,4 @@
-# AI Racer - Workshops
+# Home
 
 Below are the workshop materials related to autonomous driving/racing for The AI Racer Grand Prix.
 
