@@ -18,7 +18,7 @@ Before the Intro to ROS 2 Workshop, make sure to have Ubuntu 22.04 and ROS2 Humb
 - [Install VMWare & Ubuntu 22.04](Intro-to-ROS-2/vmware-ubuntu)
 - [Install ROS2 Humble on Ubuntu 22.04](Intro-to-ROS-2/ros2-install)
 
-### Documents
+### Resources
 - [GBM 1 & Intro to ROS 2 - Workshop Presentation](https://docs.google.com/presentation/d/10jZ5V3pThUc_gJR8RwOVL-UM0QNemeR7XzTK7Eoe7Y0/edit?usp=sharing)
 - [Intro to ROS 2 Workshop Manual](Intro-to-ROS-2/Intro_to_ROS2_Workshop_Guide)
 - [Recording]()
