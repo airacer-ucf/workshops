@@ -3,6 +3,7 @@
 **Platforms:** Windows, macOS (Intel chips), macOS (Apple Silicon chips)
 
 > ***Note that for the purpose of our workshops, if you have `Ubuntu 22.04` installed through other methods, such as WSL, Other Virtual Machine, Dual Boot, or Native Ubuntu 22.04, then it is not necessary to use this Virtual Machine***
+
 ---
 
 ## Objective
@@ -157,6 +158,7 @@ ubuntu-22.04.x-live-server-arm64.iso
 12. Restart when prompted
 
 > **When asked to upgrade Ubuntu, such as going from the 22.04 installed to 24.04, it is imperative that you do not upgrade**
+
 ---
 
 ### macOS Apple Silicon (Server Installer)
