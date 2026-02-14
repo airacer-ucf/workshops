@@ -1,0 +1,10 @@
+site_name: My Docs
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - toc.integrate
+    - content.code.copy
+markdown_extensions:
+  - toc:
+      permalink: true
