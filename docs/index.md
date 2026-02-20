@@ -20,7 +20,7 @@ Before the Intro to ROS 2 Workshop, make sure to have Ubuntu 22.04 and ROS2 Humb
 
 ### Resources
 - [GBM 1 & Intro to ROS 2 - Workshop Presentation](https://docs.google.com/presentation/d/10jZ5V3pThUc_gJR8RwOVL-UM0QNemeR7XzTK7Eoe7Y0/edit?usp=sharing)
-- [Intro to ROS 2 Workshop Manual](Intro-to-ROS-2/Intro_to_ROS2_Workshop_Manual)
+- [Intro to ROS 2 Workshop Manual](Intro-to-ROS-2/Intro_to_ROS_2_Workshop_Manual)
 - [Recording](https://youtu.be/_zS1El51M_Y)
 
 
