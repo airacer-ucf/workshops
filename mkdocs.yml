@@ -1,6 +1,9 @@
 site_name: AI Racer Workshops
 theme:
   name: material
+  palette:
+    primary: red
+    accent: orange
   features:
     - navigation.sections
     - toc.integrate
