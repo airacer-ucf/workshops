@@ -69,9 +69,11 @@ Understand **nodes, topics, and messages** through hands-on implementation.
    ```
 
 2. **Create a Python package named `my_python_pkg` with dependencies on `rclpy` and `std_msgs`:**
+   
    ```bash
    ros2 pkg create my_python_pkg --build-type ament_python --dependencies rclpy std_msgs
    ```
+   
    > `--build-type ament_python` specifies the build system of the package and that it will be a Python-based ROS 2 package.
    >
    > `--dependencies rclpy std_msgs` specifies the dependencies the package requires:
@@ -79,7 +81,7 @@ Understand **nodes, topics, and messages** through hands-on implementation.
    > - `rclpy` is the Python client library for ROS 2, needed to write ROS 2 nodes in Python.
    > - `std_msgs` is a package that provides standard message types, such as String, Int32, and Float64
    
-3. **Examine the generated package structure** and identify the purpose of each file/directory.
+4. **Examine the generated package structure** and identify the purpose of each file/directory.
 
    **Generated Package Structure:**
 
@@ -330,32 +332,38 @@ Learn how to **debug and inspect live systems**
 With your nodes running, open a new terminal and execute:
 
 1. **List all active nodes:**
+   
    ```bash
    ros2 node list
    ```
 
-2. **Get detailed information about a node:**
+3. **Get detailed information about a node:**
+   
    ```bash
    ros2 node info /simple_publisher
    ros2 node info /simple_subscriber
    ```
 
-3. **List all active topics:**
+4. **List all active topics:**
+   
    ```bash
    ros2 topic list
    ```
 
-4. **Get information about the `ros2intro` topic:**
+5. **Get information about the `ros2intro` topic:**
+   
    ```bash
    ros2 topic info /ros2intro
    ```
 
-5. **Echo messages from the topic:**
+6. **Echo messages from the topic:**
+   
    ```bash
    ros2 topic echo /ros2intro
    ```
 
-6. **Check the publishing rate:**
+7. **Check the publishing rate:**
+   
    ```bash
    ros2 topic hz /ros2intro
    ```
@@ -374,6 +382,7 @@ Custom message types allow you to define your own data structures for communicat
 #### Why Use Custom Messages?
 
 **Standard Message:**
+
 ```python
 # Publishing speed as a Float32
 speed_msg = Float32()
@@ -381,6 +390,7 @@ speed_msg.data = 25.5
 ```
 
 **Custom Message:**
+
 ```python
 # Publishing complete vehicle state
 vehicle_msg = VehicleState()
@@ -817,6 +827,7 @@ Launch files allow you to start multiple nodes simultaneously with a single comm
 #### Why Use Launch Files?
 
 **Without Launch Files:**
+
 ```bash
 # Terminal 1
 ros2 run my_python_pkg simple_publisher
@@ -832,6 +843,7 @@ ros2 run my_python_pkg custom_subscriber
 ```
 
 **With Launch Files:**
+
 ```bash
 # Single terminal
 ros2 launch my_python_pkg all_nodes_launch.py
@@ -1089,6 +1101,7 @@ source install/setup.bash
 #### Step 8: Run Launch Files
 
 **Launch simple nodes only:**
+
 ```bash
 ros2 launch my_python_pkg simple_nodes_launch.py
 ```
@@ -1106,11 +1119,13 @@ ros2 launch my_python_pkg simple_nodes_launch.py
 ```
 
 **Launch custom message nodes only:**
+
 ```bash
 ros2 launch my_python_pkg custom_nodes_launch.py
 ```
 
 **Launch all nodes:**
+
 ```bash
 ros2 launch my_python_pkg all_nodes_launch.py
 ```
