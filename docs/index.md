@@ -54,7 +54,9 @@ Before this Workshop, make sure to have Ubuntu 22.04 and ROS2 Humble installed o
 
 ### Resources
 
-- [Live Canvas](https://refmd.io/document/3ceb283c-b49d-472b-90fc-52610ef23a0d?token=26bd942f-ed96-43f2-8997-f4db27818671)
+- [Presentation](https://docs.google.com/presentation/d/1fNDseNn5TWv0ND80yqG2IxD13dNE0npULNmDRJ5y8cY/edit?usp=sharing)
+- [Workshop Guide](PID-and-Wall-Following/PID_Controller_&_Wall_Following_Technique_-_Workshop)
+- [Recording](https://youtu.be/3wqhqga_rZw)
 
 > Being familiar with using ROS 2 is highly recommended. See [Intro to ROS 2 Workshop](#intro-to-ros-2-workshop-gbm-1)
 
