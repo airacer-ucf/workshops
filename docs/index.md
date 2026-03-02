@@ -66,7 +66,7 @@ Before this Workshop, make sure to have Ubuntu 22.04 and ROS2 Humble installed o
 
 Before this Workshop, make sure to have SolidWorks (2025 or later) installed on your machine, make sure to have an external mouse (touchpad is a nightmare with SolidWorks). Below are some tutorial on how to install SolidWorks:
 
-- [Download and Install SolidWorks for Free (UCF Students)](Frame-Design-&-CAD/AI_Racers_CAD_Workshop_Prereqs)
+- [Download and Install SolidWorks for Free (UCF Students)](Frame-Design-&-CAD//AI_Racers_CAD_Workshop_Prereqs.pdf)
 
 > Use an external mouse for easier navigation when working with SolidWorks
 
