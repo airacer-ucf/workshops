@@ -60,6 +60,29 @@ Before this Workshop, make sure to have Ubuntu 22.04 and ROS2 Humble installed o
 
 > Being familiar with using ROS 2 is highly recommended. See [Intro to ROS 2 Workshop](#intro-to-ros-2-workshop-gbm-1)
 
+## Frame Design & CAD Workshop by Axama
+
+### Prerequisites
+
+Before this Workshop, make sure to have SolidWorks (2025 or later) installed on your machine, make sure to have an external mouse (touchpad is a nightmare with SolidWorks). Below are some tutorial on how to install SolidWorks:
+
+- [Download and Install SolidWorks for Free (UCF Students)](Frame-Design-&-CAD/AI_Racers_CAD_Workshop_Prereqs)
+
+> Use an external mouse for easier navigation when working with SolidWorks
+
+## Follow the Gap - Reactive Obstacle Avoidance Workshop & GBM 4
+
+### Prerequisites
+
+Before this Workshop, make sure to have Ubuntu 22.04 and ROS2 Humble installed on your machine, along with the F1Tenth Simulation. Below are some tutorial on how to install them:
+
+- [Install VMWare & Ubuntu 22.04](Intro-to-ROS-2/vmware-ubuntu)
+- [Install ROS2 Humble on Ubuntu 22.04](Intro-to-ROS-2/ros2-install)
+- [Simulation Installation Guide](Simulation-and-AEB-Systems/F1tenthGymROS-Install)
+
+### Resources
+
+
 ## Additional resources
 
 - Short Promo Presentation: [https://tinyurl.com/airacer-grandprix1-promo](https://tinyurl.com/airacer-grandprix1-promo)
