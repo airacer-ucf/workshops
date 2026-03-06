@@ -1,0 +1,1733 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../PID-and-Wall-Following/PID_Controller_%26_Wall_Following_Technique_-_Workshop/">
+      
+      
+        <link rel="next" href="../F1tenthGymROS-Install/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+    
+    
+      
+        <title>Automatic Emergency Braking (AEB) with iTTC - AI Racer Workshops</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#automatic-emergency-braking-aeb-with-ittc" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI Racer Workshops" class="md-header__button md-logo" aria-label="AI Racer Workshops" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Racer Workshops
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Automatic Emergency Braking (AEB) with iTTC
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI Racer Workshops" class="md-nav__button md-logo" aria-label="AI Racer Workshops" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Racer Workshops
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro to ROS 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Intro to ROS 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Intro-to-ROS-2/Intro_to_ROS_2_Workshop_Manual/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro to ROS 2 Workshop Manual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Intro-to-ROS-2/ros2-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installing ROS 2 Humble on Ubuntu 22.04
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Intro-to-ROS-2/vmware-ubuntu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installing Ubuntu 22.04 on VMware virtual machine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PID and Wall Following
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PID and Wall Following
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PID-and-Wall-Following/PID_Controller_%26_Wall_Following_Technique_-_Workshop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wall Following with PID Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation and AEB Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation and AEB Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automatic Emergency Braking (AEB) with iTTC
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automatic Emergency Braking (AEB) with iTTC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-understanding-the-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Understanding the Theory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Understanding the Theory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-time-to-collision-ttc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Time to Collision (TTC)?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ittc-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The iTTC Formula
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-range-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding Range Rate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Calculation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-laserscan-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding LaserScan Message
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-setting-up-the-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: Setting Up the Workspace
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: Setting Up the Workspace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-21-create-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.1: Create Package
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-22-create-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.2: Create Directory Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-23-check-packagexml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.3: Check package.xml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-24-update-setuppy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.4: Update setup.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-implementing-the-safety-node-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: Implementing the Safety Node - Step by Step
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: Implementing the Safety Node - Step by Step">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-31-create-basic-node-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.1: Create Basic Node Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-32-implement-ittc-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.2: Implement iTTC Calculation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-33-create-parameter-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.3: Create Parameter Configuration File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-34-create-launch-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.4: Create Launch File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-35-build-and-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.5: Build and Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-testing-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: Testing Procedure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-advanced-features-and-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: Advanced Features and Tuning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 5: Advanced Features and Tuning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-51-add-safety-regions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5.1: Add Safety Regions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-52-add-filtering-for-false-positives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5.2: Add Filtering for False Positives
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Learned:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaways-for-autonomous-racing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways for Autonomous Racing:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../F1tenthGymROS-Install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    F1TENTH Gym ROS Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="automatic-emergency-braking-aeb-with-ittc">Automatic Emergency Braking (AEB) with iTTC<a class="headerlink" href="#automatic-emergency-braking-aeb-with-ittc" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>You will develop a safety node that prevents the race car from colliding with obstacles by implementing Automatic Emergency Braking (AEB) using Instantaneous Time to Collision (iTTC). This is a critical safety feature for autonomous racing vehicles.</p>
+<hr />
+<h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
+<p>By the end of this, you will be able to:
+1. Understand and implement Time to Collision (TTC) calculations
+2. Work with LaserScan messages for obstacle detection
+3. Process Odometry messages to extract vehicle velocity
+4. Implement emergency braking logic using AckermannDriveStamped
+5. Handle edge cases (inf, nan) in sensor data
+6. Tune safety thresholds for reliable collision avoidance
+7. Test safety systems in a simulated environment</p>
+<hr />
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>Ensure ROS2 Humble is installed and sourced:</p>
+<pre><code class="language-bash">source /opt/ros/humble/setup.bash
+</code></pre>
+<hr />
+<h2 id="part-1-understanding-the-theory">Part 1: Understanding the Theory<a class="headerlink" href="#part-1-understanding-the-theory" title="Permanent link">&para;</a></h2>
+<h3 id="what-is-time-to-collision-ttc">What is Time to Collision (TTC)?<a class="headerlink" href="#what-is-time-to-collision-ttc" title="Permanent link">&para;</a></h3>
+<p><strong>Time to Collision (TTC)</strong> is the time it would take for a vehicle to collide with an obstacle if it maintains its current heading and velocity.</p>
+<p><strong>Instantaneous Time to Collision (iTTC)</strong> is an approximation calculated from:
+- Current range measurements (from LiDAR)
+- Current velocity (from odometry)</p>
+<h3 id="the-ittc-formula">The iTTC Formula<a class="headerlink" href="#the-ittc-formula" title="Permanent link">&para;</a></h3>
+<p>$$iTTC = \frac{r}{{-\dot{r}}_+}$$</p>
+<p>Where:
+- $r$ = instantaneous range measurement (distance to obstacle)
+- $\dot{r}$ = range rate (rate of change of distance)
+- ${x}_+ = \max(x, 0)$ (ensures we only consider approaching obstacles)</p>
+<h3 id="understanding-range-rate">Understanding Range Rate<a class="headerlink" href="#understanding-range-rate" title="Permanent link">&para;</a></h3>
+<p><strong>Range rate</strong> $\dot{r}$ tells us how fast the distance to an obstacle is changing:</p>
+<ul>
+<li><strong>Negative range rate</strong>: Distance is decreasing (approaching obstacle) → collision risk</li>
+<li><strong>Positive range rate</strong>: Distance is increasing (moving away) → no collision risk</li>
+</ul>
+<p><strong>Calculation Method 1 - Using Vehicle Velocity:</strong></p>
+<p>For each LiDAR beam at angle $\theta_i$:</p>
+<p>$$\dot{r}_i = -v_x \cos(\theta_i)$$</p>
+<p>Where:
+- $v_x$ = vehicle's longitudinal velocity
+- $\theta_i$ = angle of the LiDAR beam
+- Negative sign accounts for: approaching obstacle = shrinking range = negative rate</p>
+<p><strong>Calculation Method 2 - Using Temporal Difference:</strong></p>
+<p>$$\dot{r}<em>i = \frac{r</em>{current} - r_{previous}}{\Delta t}$$</p>
+<p><strong>For this lab, we'll use Method 1</strong> (velocity projection method).</p>
+<h3 id="example-calculation">Example Calculation<a class="headerlink" href="#example-calculation" title="Permanent link">&para;</a></h3>
+<pre><code>Scenario: Car traveling at 2 m/s toward a wall 10m ahead
+
+Beam directly ahead (θ = 0°):
+- r = 10.0 m
+- v_x = 2.0 m/s
+- ṙ = -2.0 * cos(0°) = -2.0 m/s
+- iTTC = 10.0 / max(-(-2.0), 0) = 10.0 / 2.0 = 5.0 seconds
+
+Beam at 90° to the side (θ = 90°):
+- r = 5.0 m
+- ṙ = -2.0 * cos(90°) = 0.0 m/s
+- iTTC = 5.0 / max(0.0, 0) → infinity (no collision risk)
+</code></pre>
+<h3 id="understanding-laserscan-message">Understanding LaserScan Message<a class="headerlink" href="#understanding-laserscan-message" title="Permanent link">&para;</a></h3>
+<pre><code class="language-python">LaserScan:
+  header:
+    stamp: Time of measurement
+    frame_id: &quot;ego_racecar/laser&quot;
+
+  angle_min: -2.35619  # Start angle (radians)
+  angle_max: 2.35619   # End angle (radians)
+  angle_increment: 0.00436  # Angular resolution
+
+  range_min: 0.0       # Minimum valid range
+  range_max: 30.0      # Maximum valid range
+
+  ranges: [5.2, 5.1, 5.0, ...]  # Array of range measurements
+</code></pre>
+<p><strong>Key points:</strong>
+- <code>ranges</code> array is radially ordered from <code>angle_min</code> to <code>angle_max</code>
+- Each element corresponds to a specific angle (determined by using <code>angle_increment</code>)
+- Invalid measurements may be <code>inf</code> or <code>nan</code></p>
+<hr />
+<h2 id="part-2-setting-up-the-workspace">Part 2: Setting Up the Workspace<a class="headerlink" href="#part-2-setting-up-the-workspace" title="Permanent link">&para;</a></h2>
+<h3 id="step-21-create-package">Step 2.1: Create Package<a class="headerlink" href="#step-21-create-package" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">cd ~/ros2_ws/src
+ros2 pkg create safety_node --build-type ament_python \
+  --dependencies rclpy sensor_msgs nav_msgs ackermann_msgs std_msgs
+</code></pre>
+<h3 id="step-22-create-directory-structure">Step 2.2: Create Directory Structure<a class="headerlink" href="#step-22-create-directory-structure" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">cd safety_node
+mkdir -p launch config
+</code></pre>
+<p><strong>Resulting structure:</strong></p>
+<pre><code>safety_node/
+├── safety_node/
+│   ├── __init__.py
+│   └── safety_node.py          # Main node (we'll create this)
+├── launch/
+│   └── safety_node.launch.py   # Launch file (we'll create this)
+├── config/
+│   └── safety_params.yaml      # Parameters (we'll create this)
+├── package.xml
+├── setup.py
+└── resource/
+</code></pre>
+<h3 id="step-23-check-packagexml">Step 2.3: Check package.xml<a class="headerlink" href="#step-23-check-packagexml" title="Permanent link">&para;</a></h3>
+<p>Ensure your <code>package.xml</code> file has the necessary dependencies</p>
+<p><strong>File:</strong> <code>~/ros2_ws/src/safety_node/package.xml</code></p>
+<pre><code class="language-xml">  ...
+  &lt;depend&gt;rclpy&lt;/depend&gt;
+  &lt;depend&gt;sensor_msgs&lt;/depend&gt;
+  &lt;depend&gt;nav_msgs&lt;/depend&gt;
+  &lt;depend&gt;ackermann_msgs&lt;/depend&gt;
+  &lt;depend&gt;std_msgs&lt;/depend&gt;
+  ...
+</code></pre>
+<h3 id="step-24-update-setuppy">Step 2.4: Update setup.py<a class="headerlink" href="#step-24-update-setuppy" title="Permanent link">&para;</a></h3>
+<p><strong>File:</strong> <code>~/ros2_ws/src/safety_node/setup.py</code></p>
+<pre><code class="language-python">from setuptools import setup
+import os # Added
+from glob import glob # Added
+
+package_name = 'safety_node'
+
+setup(
+    name=package_name,
+    version='1.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+        # Include launch files
+        (os.path.join('share', package_name, 'launch'),
+            glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
+        # Include config files
+        (os.path.join('share', package_name, 'config'),
+            glob(os.path.join('config', '*.yaml'))),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='Student Name',
+    maintainer_email='student@example.com',
+    description='AEB safety node using iTTC',
+    license='MIT',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'safety_node = safety_node.safety_node:main',
+        ],
+    },
+)
+</code></pre>
+<hr />
+<h2 id="part-3-implementing-the-safety-node-step-by-step">Part 3: Implementing the Safety Node - Step by Step<a class="headerlink" href="#part-3-implementing-the-safety-node-step-by-step" title="Permanent link">&para;</a></h2>
+<h3 id="step-31-create-basic-node-structure">Step 3.1: Create Basic Node Structure<a class="headerlink" href="#step-31-create-basic-node-structure" title="Permanent link">&para;</a></h3>
+<p><strong>File:</strong> <code>~/ros2_ws/src/safety_node/safety_node/safety_node.py</code></p>
+<pre><code class="language-python">#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+
+import numpy as np
+from sensor_msgs.msg import LaserScan
+from nav_msgs.msg import Odometry
+from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
+
+
+class SafetyNode(Node):
+    &quot;&quot;&quot;
+    The class that handles emergency braking.
+    &quot;&quot;&quot;
+    def __init__(self):
+        super().__init__('safety_node')
+
+        # Declare parameters
+        self.declare_parameter('ttc_threshold', 0.5)  # seconds
+        self.declare_parameter('speed_threshold', 0.1)  # m/s minimum speed to check
+
+        # Get parameters
+        self.ttc_threshold = self.get_parameter('ttc_threshold').value
+        self.speed_threshold = self.get_parameter('speed_threshold').value
+
+        # Initialize variables
+        self.speed = 0.0
+
+        # Create subscribers
+        self.scan_sub = self.create_subscription(
+            LaserScan,
+            '/scan',
+            self.scan_callback,
+            10)
+
+        self.odom_sub = self.create_subscription(
+            Odometry,
+            '/ego_racecar/odom',
+            self.odom_callback,
+            10)
+
+        # Create publisher for brake commands
+        self.brake_pub = self.create_publisher(
+            AckermannDriveStamped,
+            '/drive',
+            10)
+
+        self.get_logger().info('Safety Node initialized')
+        self.get_logger().info(f'TTC Threshold: {self.ttc_threshold} seconds')
+        self.get_logger().info(f'Speed Threshold: {self.speed_threshold} m/s')
+
+    def odom_callback(self, odom_msg):
+        &quot;&quot;&quot;
+        Update current speed from odometry
+        &quot;&quot;&quot;
+        # Extract longitudinal velocity (x component in vehicle frame)
+        self.speed = odom_msg.twist.twist.linear.x
+
+    def scan_callback(self, scan_msg):
+        &quot;&quot;&quot;
+        Process laser scan and trigger emergency brake if needed
+        &quot;&quot;&quot;
+        # TODO: Implement iTTC calculation and braking logic
+        pass
+
+def main(args=None):
+    rclpy.init(args=args)
+    safety_node = SafetyNode()
+    try:
+        rclpy.spin(safety_node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        safety_node.destroy_node()
+        if rclpy.ok():
+           rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<p><strong>Test this basic structure:</strong></p>
+<pre><code class="language-bash">cd ~/ros2_ws
+colcon build --packages-select safety_node --symlink-install
+source install/setup.bash
+ros2 run safety_node safety_node
+</code></pre>
+<p>Press Ctrl+C to stop. You should see the initialization messages.</p>
+<hr />
+<h3 id="step-32-implement-ittc-calculation">Step 3.2: Implement iTTC Calculation<a class="headerlink" href="#step-32-implement-ittc-calculation" title="Permanent link">&para;</a></h3>
+<p>Now let's fill in the <code>scan_callback</code> with iTTC calculation:</p>
+<pre><code class="language-python">def scan_callback(self, scan_msg):
+    &quot;&quot;&quot;
+    Process laser scan and trigger emergency brake if needed
+    &quot;&quot;&quot;
+    # Skip processing if car is nearly stationary
+    if abs(self.speed) &lt; self.speed_threshold:
+        return
+
+    # Extract scan data
+    ranges = np.array(scan_msg.ranges)
+
+    # Calculate angle for each beam
+    # angle_i = angle_min + i * angle_increment
+    num_beams = len(ranges)
+    angles = scan_msg.angle_min + np.arange(num_beams) * scan_msg.angle_increment
+
+    # Calculate range rate for each beam
+    # ṙ = -v_x * cos(θ)
+    # Negative sign because approaching obstacle means decreasing range
+    range_rates = -self.speed * np.cos(angles)
+
+    # Calculate iTTC for each beam
+    # iTTC = r / max(-ṙ, 0)
+    # We need -ṙ because we want positive values for approaching obstacles
+    # The max(..., 0) ensures we only consider negative range rates (approaching)
+
+    # Initialize iTTC array with infinity
+    ittc = np.full(num_beams, np.inf)
+
+    # Only calculate iTTC where range rate is negative (approaching obstacle)
+    approaching = range_rates &lt; 0
+
+    # Calculate iTTC for approaching obstacles
+    # iTTC = range / abs(range_rate)
+    ittc[approaching] = ranges[approaching] / np.abs(range_rates[approaching])
+
+    # Handle invalid measurements (inf, nan, out of range)
+    # Replace inf and nan with a large number to avoid triggering brake
+    ittc = np.nan_to_num(ittc, nan=np.inf, posinf=np.inf, neginf=np.inf)
+
+    # Also filter out measurements outside valid range
+    invalid_ranges = (ranges &lt; scan_msg.range_min) | (ranges &gt; scan_msg.range_max)
+    ittc[invalid_ranges] = np.inf
+
+    # Find minimum iTTC
+    min_ittc = np.min(ittc)
+
+    # Log for debugging
+    if min_ittc &lt; self.ttc_threshold:
+        self.get_logger().warn(
+            f'Collision imminent! Min iTTC: {min_ittc:.3f}s (threshold: {self.ttc_threshold}s)',
+            throttle_duration_sec=1.0)  # Throttle to avoid spam
+
+    # Trigger emergency brake if iTTC is below threshold
+    if min_ittc &lt; self.ttc_threshold:
+        self.publish_brake()
+
+def publish_brake(self):
+    &quot;&quot;&quot;
+    Publish emergency brake command
+    &quot;&quot;&quot;
+    brake_msg = AckermannDriveStamped()
+    brake_msg.header.stamp = self.get_clock().now().to_msg()
+    brake_msg.header.frame_id = 'base_link'
+
+    # Set speed to 0 to brake
+    brake_msg.drive.speed = 0.0
+
+    self.brake_pub.publish(brake_msg)
+    self.get_logger().info('EMERGENCY BRAKE ACTIVATED!', throttle_duration_sec=1.0)
+</code></pre>
+<p><strong>Complete safety_node.py at this stage:</strong></p>
+<p><strong>File:</strong> <code>~/ros2_ws/src/safety_node/safety_node/safety_node.py</code></p>
+<pre><code class="language-python">#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+
+import numpy as np
+from sensor_msgs.msg import LaserScan
+from nav_msgs.msg import Odometry
+from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
+
+
+class SafetyNode(Node):
+    &quot;&quot;&quot;
+    The class that handles emergency braking using iTTC.
+    &quot;&quot;&quot;
+    def __init__(self):
+        super().__init__('safety_node')
+
+        # Declare parameters
+        self.declare_parameter('ttc_threshold', 0.5)
+        self.declare_parameter('speed_threshold', 0.1)
+
+        # Get parameters
+        self.ttc_threshold = self.get_parameter('ttc_threshold').value
+        self.speed_threshold = self.get_parameter('speed_threshold').value
+
+        # Initialize variables
+        self.speed = 0.0
+
+        # Create subscribers
+        self.scan_sub = self.create_subscription(
+            LaserScan,
+            '/scan',
+            self.scan_callback,
+            10)
+
+        self.odom_sub = self.create_subscription(
+            Odometry,
+            '/ego_racecar/odom',
+            self.odom_callback,
+            10)
+
+        # Create publisher for brake commands
+        self.brake_pub = self.create_publisher(
+            AckermannDriveStamped,
+            '/drive',
+            10)
+
+        self.get_logger().info('='*50)
+        self.get_logger().info('Safety Node initialized')
+        self.get_logger().info(f'TTC Threshold: {self.ttc_threshold} seconds')
+        self.get_logger().info(f'Speed Threshold: {self.speed_threshold} m/s')
+        self.get_logger().info('='*50)
+
+    def odom_callback(self, odom_msg):
+        &quot;&quot;&quot;
+        Update current speed from odometry.
+        The x component of linear velocity is the longitudinal speed.
+        &quot;&quot;&quot;
+        self.speed = odom_msg.twist.twist.linear.x
+
+    def scan_callback(self, scan_msg):
+        &quot;&quot;&quot;
+        Process laser scan and trigger emergency brake if needed.
+        Calculates iTTC for all beams and brakes if minimum is below threshold.
+        &quot;&quot;&quot;
+        # Skip processing if car is nearly stationary
+        if abs(self.speed) &lt; self.speed_threshold:
+            return
+
+        # Extract scan data
+        ranges = np.array(scan_msg.ranges)
+
+        # Calculate angle for each beam
+        num_beams = len(ranges)
+        angles = scan_msg.angle_min + np.arange(num_beams) * scan_msg.angle_increment
+
+        # Calculate range rate for each beam
+        # ṙ = -v_x * cos(θ)
+        range_rates = -self.speed * np.cos(angles)
+
+        # Initialize iTTC array with infinity
+        ittc = np.full(num_beams, np.inf)
+
+        # Only calculate iTTC where range rate is negative (approaching)
+        approaching = range_rates &lt; 0
+
+        # Calculate iTTC: iTTC = r / |ṙ| for approaching obstacles
+        ittc[approaching] = ranges[approaching] / np.abs(range_rates[approaching])
+
+        # Handle invalid measurements
+        ittc = np.nan_to_num(ittc, nan=np.inf, posinf=np.inf, neginf=np.inf)
+
+        # Filter out measurements outside valid range
+        invalid_ranges = (ranges &lt; scan_msg.range_min) | (ranges &gt; scan_msg.range_max)
+        ittc[invalid_ranges] = np.inf
+
+        # Find minimum iTTC
+        min_ittc = np.min(ittc)
+
+        # Debug logging
+        if min_ittc &lt; self.ttc_threshold:
+            min_idx = np.argmin(ittc)
+            min_angle = angles[min_idx]
+            min_range = ranges[min_idx]
+
+            self.get_logger().warn(
+                f'Collision Warning! iTTC: {min_ittc:.3f}s | '
+                f'Range: {min_range:.2f}m | Angle: {np.degrees(min_angle):.1f}°',
+                throttle_duration_sec=0.5)
+
+        # Trigger emergency brake if iTTC is below threshold
+        if min_ittc &lt; self.ttc_threshold:
+            self.publish_brake()
+
+    def publish_brake(self):
+        &quot;&quot;&quot;
+        Publish emergency brake command (speed = 0).
+        &quot;&quot;&quot;
+        brake_msg = AckermannDriveStamped()
+        brake_msg.header.stamp = self.get_clock().now().to_msg()
+        brake_msg.header.frame_id = 'base_link'
+        brake_msg.drive.speed = 0.0
+
+        self.brake_pub.publish(brake_msg)
+        self.get_logger().info(
+            '🛑 EMERGENCY BRAKE ACTIVATED! 🛑',
+            throttle_duration_sec=1.0)
+
+def main(args=None):
+    rclpy.init(args=args)
+    safety_node = SafetyNode()
+    try:
+        rclpy.spin(safety_node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        safety_node.destroy_node()
+        if rclpy.ok():
+           rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<hr />
+<h3 id="step-33-create-parameter-configuration-file">Step 3.3: Create Parameter Configuration File<a class="headerlink" href="#step-33-create-parameter-configuration-file" title="Permanent link">&para;</a></h3>
+<p><strong>File:</strong> <code>~/ros2_ws/src/safety_node/config/safety_params.yaml</code></p>
+<pre><code class="language-yaml"># Safety Node Parameters
+
+safety_node:
+  ros__parameters:
+    # Time to Collision threshold (seconds)
+    # Lower values = more aggressive braking
+    # Higher values = more conservative, may brake unnecessarily
+    ttc_threshold: 0.5
+
+    # Minimum speed to activate safety checks (m/s)
+    # Below this speed, AEB is disabled to avoid false positives when stationary
+    speed_threshold: 0.1
+</code></pre>
+<hr />
+<h3 id="step-34-create-launch-file">Step 3.4: Create Launch File<a class="headerlink" href="#step-34-create-launch-file" title="Permanent link">&para;</a></h3>
+<p><strong>File:</strong> <code>~/ros2_ws/src/safety_node/launch/safety_node.launch.py</code></p>
+<pre><code class="language-python">#!/usr/bin/env python3
+
+import os
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+from ament_index_python.packages import get_package_share_directory
+
+
+def generate_launch_description():
+    &quot;&quot;&quot;
+    Launch the safety node with parameters
+    &quot;&quot;&quot;
+
+    # Get package directory
+    pkg_dir = get_package_share_directory('safety_node')
+
+    # Path to parameter file
+    params_file = os.path.join(pkg_dir, 'config', 'safety_params.yaml')
+
+    # Declare launch arguments
+    ttc_threshold_arg = DeclareLaunchArgument(
+        'ttc_threshold',
+        default_value='0.5',
+        description='Time to Collision threshold in seconds'
+    )
+
+    speed_threshold_arg = DeclareLaunchArgument(
+        'speed_threshold',
+        default_value='0.1',
+        description='Minimum speed to activate AEB (m/s)'
+    )
+
+    # Safety node
+    safety_node = Node(
+        package='safety_node',
+        executable='safety_node',
+        name='safety_node',
+        output='screen',
+        emulate_tty=True,
+        parameters=[
+            params_file,
+            {
+                'ttc_threshold': LaunchConfiguration('ttc_threshold'),
+                'speed_threshold': LaunchConfiguration('speed_threshold'),
+            }
+        ]
+    )
+
+    return LaunchDescription([
+        ttc_threshold_arg,
+        speed_threshold_arg,
+        safety_node,
+    ])
+</code></pre>
+<hr />
+<h3 id="step-35-build-and-test">Step 3.5: Build and Test<a class="headerlink" href="#step-35-build-and-test" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">cd ~/ros2_ws
+colcon build --packages-select safety_node
+source install/setup.bash
+</code></pre>
+<p><strong>Test the node:</strong></p>
+<pre><code class="language-bash">ros2 launch safety_node safety_node.launch.py
+</code></pre>
+<hr />
+<h2 id="part-4-testing-procedure">Part 4: Testing Procedure<a class="headerlink" href="#part-4-testing-procedure" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Start all nodes</strong> (simulator, safety, teleop, anything else that is needed)</p>
+</li>
+<li>
+<p><strong>In simulator, use <code>2D Pose Estimate tool</code></strong> to position and orient the car. Click somewhere on the map, and drag for direction.</p>
+</li>
+<li>
+<p><strong>Drive toward a wall using keyboard:</strong></p>
+</li>
+<li>
+<p><strong>Observe safety node behavior:</strong></p>
+</li>
+<li>Watch terminal for iTTC warnings</li>
+<li>Car should automatically brake before hitting wall</li>
+<li>
+<p>Test at different speeds</p>
+</li>
+<li>
+<p><strong>Experiment with parameters:</strong>
+   ```bash
+   # More aggressive braking
+   ros2 launch safety_node safety_node.launch.py ttc_threshold:=1.0</p>
+</li>
+</ol>
+<p># Less aggressive
+   ros2 launch safety_node safety_node.launch.py ttc_threshold:=0.3
+   ```</p>
+<blockquote>
+<p><strong><em>Note that the simulation is in development and does not always work as expected</em></strong></p>
+</blockquote>
+<hr />
+<h2 id="part-5-advanced-features-and-tuning">Part 5: Advanced Features and Tuning<a class="headerlink" href="#part-5-advanced-features-and-tuning" title="Permanent link">&para;</a></h2>
+<h3 id="step-51-add-safety-regions">Step 5.1: Add Safety Regions<a class="headerlink" href="#step-51-add-safety-regions" title="Permanent link">&para;</a></h3>
+<p>Modify to have different thresholds for different angular regions:</p>
+<pre><code class="language-python">def scan_callback(self, scan_msg):
+    # ... existing code ...
+
+    # Define safety regions (in radians)
+    front_region = (-0.5, 0.5)  # ±30 degrees
+    side_region_threshold = 0.3  # More permissive for sides
+
+    # Apply region-specific thresholds
+    front_mask = (angles &gt;= front_region[0]) &amp; (angles &lt;= front_region[1])
+
+    # Check front region with stricter threshold
+    if np.any(ittc[front_mask] &lt; self.ttc_threshold):
+        self.publish_brake()
+        return
+
+    # Check sides with more permissive threshold
+    if np.min(ittc) &lt; side_region_threshold:
+        self.publish_brake()
+</code></pre>
+<h3 id="step-52-add-filtering-for-false-positives">Step 5.2: Add Filtering for False Positives<a class="headerlink" href="#step-52-add-filtering-for-false-positives" title="Permanent link">&para;</a></h3>
+<pre><code class="language-python">def __init__(self):
+    # ... existing code ...
+    self.brake_count = 0
+    self.brake_threshold_count = 3  # Must trigger 3 times in a row
+
+def scan_callback(self, scan_msg):
+    # ... existing iTTC calculation ...
+
+    if min_ittc &lt; self.ttc_threshold:
+        self.brake_count += 1
+    else:
+        self.brake_count = 0
+
+    # Only brake if consistently detecting collision
+    if self.brake_count &gt;= self.brake_threshold_count:
+        self.publish_brake()
+</code></pre>
+<hr />
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<h3 id="what-we-learned">What We Learned:<a class="headerlink" href="#what-we-learned" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>iTTC Theory:</strong></li>
+<li>Time to Collision concept</li>
+<li>Range rate calculation</li>
+<li>
+<p>Projection of velocity onto scan beams</p>
+</li>
+<li>
+<p><strong>ROS2 Message Types:</strong></p>
+</li>
+<li><code>LaserScan</code> - LiDAR data structure</li>
+<li><code>Odometry</code> - Vehicle state information</li>
+<li>
+<p><code>AckermannDriveStamped</code> - Vehicle control commands</p>
+</li>
+<li>
+<p><strong>Safety System Design:</strong></p>
+</li>
+<li>Real-time obstacle detection</li>
+<li>Emergency braking logic</li>
+<li>
+<p>Handling edge cases (inf, nan)</p>
+</li>
+<li>
+<p><strong>Parameter Tuning:</strong></p>
+</li>
+<li>TTC threshold selection</li>
+<li>Speed threshold configuration</li>
+<li>
+<p>Region-specific safety zones</p>
+</li>
+<li>
+<p><strong>Testing and Validation:</strong></p>
+</li>
+<li>Simulator-based testing</li>
+<li>Visualization with RViz</li>
+<li>Debug monitoring</li>
+</ol>
+<h3 id="key-takeaways-for-autonomous-racing">Key Takeaways for Autonomous Racing:<a class="headerlink" href="#key-takeaways-for-autonomous-racing" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Safety is paramount</strong> - AEB is a last-resort safety net</li>
+<li><strong>Tuning is critical</strong> - Balance between safety and performance</li>
+<li><strong>Real-time constraints</strong> - Must process scans quickly</li>
+<li><strong>Robust handling</strong> - Must deal with sensor noise and errors</li>
+<li><strong>Layered safety</strong> - AEB complements higher-level planning</li>
+</ul>
+<hr />
+<h1 id="practice">Practice<a class="headerlink" href="#practice" title="Permanent link">&para;</a></h1>
+<h2 id="automatic-emergency-braking-aeb-experimentation-and-analysis">Automatic Emergency Braking (AEB) Experimentation and Analysis<a class="headerlink" href="#automatic-emergency-braking-aeb-experimentation-and-analysis" title="Permanent link">&para;</a></h2>
+<h3 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h3>
+<p>Demonstrate that your Safety Node using Instantaneous Time to Collision (iTTC) can compute iTTC from /scan and /ego_racecar/odom, and stop the vehicle before collision.</p>
+<h2 id="overview_1">Overview<a class="headerlink" href="#overview_1" title="Permanent link">&para;</a></h2>
+<p>You will:</p>
+<ol>
+<li>Run the simulator with keyboard teleop and your safety node.</li>
+<li>Drive the vehicle toward a wall.</li>
+<li>Increase speed gradually.</li>
+<li>Observe when braking occurs.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "toc.integrate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
