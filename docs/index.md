@@ -81,7 +81,10 @@ Before this Workshop, make sure to have Ubuntu 22.04 and ROS2 Humble installed o
 - [Simulation Installation Guide](Simulation-and-AEB-Systems/F1tenthGymROS-Install)
 
 ### Resources
-- [Live Canvas](https://refmd.io/document/b11e0405-ce38-4cdd-8766-4181f45c1c29?token=ee9ba57a-43a0-46fd-99f2-f869c08963f2)
+- [Presentation](https://docs.google.com/presentation/d/1oyHfUroF5JwP_BVLTj3_2H8P_GeizG60VImYsUHVRxE/edit?usp=sharing)
+- [Workshop Guide](Obstacle-Avoidance-with-Gap-Follow/Follow-the-Gap--Reactive-Obstacle-Avoidance--Workshop)
+- [Maps](Obstacle-Avoidance-with-Gap-Follow/maps.zip)
+- [Recording]([https://youtu.be/3wqhqga_rZw](https://youtu.be/kLZK-D5V5Ro))
 
 
 ## Additional resources
