@@ -84,7 +84,7 @@ Before this Workshop, make sure to have Ubuntu 22.04 and ROS2 Humble installed o
 - [Presentation](https://docs.google.com/presentation/d/1oyHfUroF5JwP_BVLTj3_2H8P_GeizG60VImYsUHVRxE/edit?usp=sharing)
 - [Workshop Guide](Obstacle-Avoidance-with-Gap-Follow/Follow-the-Gap--Reactive-Obstacle-Avoidance--Workshop)
 - [Maps](Obstacle-Avoidance-with-Gap-Follow/maps.zip)
-- [Recording](https://youtu.be/3wqhqga_rZw)
+- [Recording](https://youtu.be/kLZK-D5V5Ro)
 
 
 ## Additional resources
