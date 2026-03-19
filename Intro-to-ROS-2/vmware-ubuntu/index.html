@@ -1,0 +1,1347 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../ros2-install/">
+      
+      
+        <link rel="next" href="../../Obstacle-Avoidance-with-Gap-Follow/Follow-the-Gap--Reactive-Obstacle-Avoidance--Workshop/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+    
+    
+      
+        <title>Installing Ubuntu 22.04 on VMware virtual machine - AI Racer Workshops</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#installing-ubuntu-2204-on-vmware-virtual-machine" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI Racer Workshops" class="md-header__button md-logo" aria-label="AI Racer Workshops" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Racer Workshops
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Installing Ubuntu 22.04 on VMware virtual machine
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI Racer Workshops" class="md-nav__button md-logo" aria-label="AI Racer Workshops" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Racer Workshops
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro to ROS 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Intro to ROS 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Intro_to_ROS_2_Workshop_Manual/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro to ROS 2 Workshop Manual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ros2-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installing ROS 2 Humble on Ubuntu 22.04
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installing Ubuntu 22.04 on VMware virtual machine
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installing Ubuntu 22.04 on VMware virtual machine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objective
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-install-vmware-differs-by-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Install VMware (Differs by Platform)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Install VMware (Differs by Platform)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-intel-apple-silicon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS (Intel &amp; Apple Silicon)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-download-ubuntu-2204-critical-differences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Download Ubuntu 22.04 (Critical Differences)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Download Ubuntu 22.04 (Critical Differences)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-macos-intel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows &amp; macOS Intel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-apple-silicon-chips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS Apple Silicon Chips
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-create-the-virtual-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Create the Virtual Machine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Create the Virtual Machine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-vmware-workstation-pro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows (VMware Workstation Pro)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-vmware-fusion-intel-apple-silicon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS (VMware Fusion – Intel &amp; Apple Silicon)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-install-ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Install Ubuntu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Install Ubuntu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-macos-intel-desktop-installer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows &amp; macOS Intel (Desktop Installer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-apple-silicon-server-installer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS Apple Silicon (Server Installer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-install-ubuntu-desktop-apple-silicon-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Install Ubuntu Desktop (Apple Silicon Only)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-install-vmware-tools-all-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Install VMware Tools (All Platforms)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: Install VMware Tools (All Platforms)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inside-the-ubuntu-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inside the Ubuntu VM
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-summary-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Platform Summary (Verified)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-ubuntu-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify Ubuntu Version
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obstacle Avoidance with Gap Follow
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Obstacle Avoidance with Gap Follow
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Obstacle-Avoidance-with-Gap-Follow/Follow-the-Gap--Reactive-Obstacle-Avoidance--Workshop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follow the Gap - Reactive Obstacle Avoidance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PID and Wall Following
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PID and Wall Following
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PID-and-Wall-Following/PID_Controller_%26_Wall_Following_Technique_-_Workshop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wall Following with PID Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation and AEB Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation and AEB Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Simulation-and-AEB-Systems/AEB-Systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automatic Emergency Braking (AEB) with iTTC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Simulation-and-AEB-Systems/F1tenthGymROS-Install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    F1TENTH Gym ROS Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="installing-ubuntu-2204-on-vmware-virtual-machine">Installing Ubuntu 22.04 on VMware virtual machine<a class="headerlink" href="#installing-ubuntu-2204-on-vmware-virtual-machine" title="Permanent link">&para;</a></h1>
+<p><strong>Platforms:</strong> Windows, macOS (Intel chips), macOS (Apple Silicon chips)</p>
+<blockquote>
+<p><strong><em>Note that for the purpose of our workshops, if you have <code>Ubuntu 22.04</code> installed through other methods, such as WSL, Other Virtual Machine, Dual Boot, or Native Ubuntu 22.04, then it is not necessary to use this Virtual Machine</em></strong></p>
+</blockquote>
+<hr />
+<h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
+<p>In this tutorial, you will:</p>
+<ol>
+<li>Install <strong>VMware</strong> virtual machine on your computer</li>
+<li>Create a <strong>virtual machine (VM)</strong> environment</li>
+<li>Install <strong>Ubuntu 22.04</strong></li>
+<li>Verify a working Ubuntu desktop environment</li>
+</ol>
+<hr />
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A computer running <strong>Windows</strong>, <strong>macOS (Intel)</strong>, or <strong>macOS (Apple Silicon)</strong></li>
+<li>At least <strong>8 GB RAM recommended</strong></li>
+<li>At least <strong>50 GB free disk space</strong></li>
+<li>Internet connection</li>
+</ul>
+<hr />
+<h2 id="step-1-install-vmware-differs-by-platform">Step 1: Install VMware (Differs by Platform)<a class="headerlink" href="#step-1-install-vmware-differs-by-platform" title="Permanent link">&para;</a></h2>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<ul>
+<li>VMware product: <strong>VMware Workstation Pro (Free for personal use)</strong></li>
+<li>Download from:
+  <a href="https://www.techpowerup.com/download/vmware-workstation-pro/">https://www.techpowerup.com/download/vmware-workstation-pro/</a></li>
+<li>Click on the <code>Download</code> button for Windows (This tutorial is tested on the <code>25H2</code> version, but feel free to try a newer version if available)</li>
+<li>Select a server to download it from, and the download should start automatically (the server closest to you is usually a good choice)</li>
+</ul>
+<p><strong>Install steps:</strong></p>
+<ol>
+<li>Run the downloaded <code>.exe</code></li>
+<li>Click <strong>Next</strong></li>
+<li>Accept license agreement</li>
+<li>Use default options</li>
+<li>Click <strong>Install</strong></li>
+<li>Restart if prompted</li>
+</ol>
+<hr />
+<h3 id="macos-intel-apple-silicon">macOS (Intel &amp; Apple Silicon)<a class="headerlink" href="#macos-intel-apple-silicon" title="Permanent link">&para;</a></h3>
+<ul>
+<li>VMware product: <strong>VMware Fusion Pro (Free for personal use)</strong></li>
+<li>Download from:
+  <a href="https://www.techspot.com/downloads/2755-vmware-fusion-mac.html">https://www.techspot.com/downloads/2755-vmware-fusion-mac.html</a></li>
+<li>From the download options, click on a version, and the download should start automatically (This tutorial is tested on the <code>25H2</code> version, but feel free to try a newer version if available)</li>
+</ul>
+<p><strong>Install steps:</strong></p>
+<ol>
+<li>Open the downloaded <code>.dmg</code></li>
+<li>Double click <strong>VMware Fusion</strong> or drag it to <strong>Applications</strong> (depends on installer)</li>
+<li>Launch VMware Fusion if not automatically launched</li>
+<li>Approve permissions in <strong>System Settings → Privacy &amp; Security → Accessibility</strong></li>
+<li>Restart if requested</li>
+</ol>
+<blockquote>
+<p>VMware Fusion automatically installs the correct version for <strong>Intel</strong> or <strong>Apple Silicon</strong> Macs.</p>
+</blockquote>
+<hr />
+<h2 id="step-2-download-ubuntu-2204-critical-differences">Step 2: Download Ubuntu 22.04 (Critical Differences)<a class="headerlink" href="#step-2-download-ubuntu-2204-critical-differences" title="Permanent link">&para;</a></h2>
+<h3 id="windows-macos-intel">Windows &amp; macOS Intel<a class="headerlink" href="#windows-macos-intel" title="Permanent link">&para;</a></h3>
+<p>Download <strong>Ubuntu 22.04 Desktop (amd64)</strong>:
+<a href="https://releases.ubuntu.com/jammy/">https://releases.ubuntu.com/jammy/</a></p>
+<p>On the <code>Desktop image</code> section, click on <code>64-bit PC (AMD64) desktop image</code>, and the download should start automatically</p>
+<p>File name example:</p>
+<pre><code>ubuntu-22.04.x-desktop-amd64.iso
+</code></pre>
+<p>This is the <strong>official Ubuntu Desktop ISO</strong>.</p>
+<hr />
+<h3 id="macos-apple-silicon-chips">macOS Apple Silicon Chips<a class="headerlink" href="#macos-apple-silicon-chips" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Important:</strong> Ubuntu does <strong>not</strong> provide an official Desktop ARM ISO.</p>
+</blockquote>
+<p>Instead, download <strong>Ubuntu 22.04 Server (ARM)</strong>:
+<a href="https://cdimage.ubuntu.com/releases/jammy/release/">https://cdimage.ubuntu.com/releases/jammy/release/</a></p>
+<p>On the <code>Server install image</code> section, click on <code>64-bit ARM (ARMv8/AArch64) server install image</code>, and the download should start automatically</p>
+<p>File name example:</p>
+<pre><code>ubuntu-22.04.x-live-server-arm64.iso
+</code></pre>
+<blockquote>
+<p>You will install the <strong>desktop later</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="step-3-create-the-virtual-machine">Step 3: Create the Virtual Machine<a class="headerlink" href="#step-3-create-the-virtual-machine" title="Permanent link">&para;</a></h2>
+<h3 id="windows-vmware-workstation-pro">Windows (VMware Workstation Pro)<a class="headerlink" href="#windows-vmware-workstation-pro" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Open <strong>VMware Workstation Pro</strong></li>
+<li>Click <strong>Create a New Virtual Machine</strong></li>
+<li>Select <strong>Installer disc image file (iso)</strong></li>
+<li>Browse to the Ubuntu ISO file you downloaded earlier</li>
+<li>Click <strong>Next</strong></li>
+<li>Follow the recommended setting options</li>
+<li>Name the VM (e.g., <code>Ubuntu 22.04</code>)</li>
+<li>
+<p>Disk size:</p>
+</li>
+<li>
+<p>Recommended: <strong>50 GB</strong></p>
+</li>
+<li>Click <strong>Finish</strong></li>
+</ol>
+<hr />
+<h3 id="macos-vmware-fusion-intel-apple-silicon">macOS (VMware Fusion – Intel &amp; Apple Silicon)<a class="headerlink" href="#macos-vmware-fusion-intel-apple-silicon" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Open <strong>VMware Fusion Pro</strong></li>
+<li>Click <strong>Create New</strong> if prompted</li>
+<li>Select <strong>Install from disc or image</strong> then press <code>Continue</code></li>
+<li>Drag the Ubuntu ISO file recently downloaded or click on <code>Use another disc or disc image...</code> to choose the Ubuntu ISO file downloaded</li>
+<li>Click <strong>Continue</strong></li>
+<li>Follow the recommended setting options (Disk size: 50 GB)</li>
+<li>Finish setup</li>
+</ol>
+<hr />
+<h2 id="step-4-install-ubuntu">Step 4: Install Ubuntu<a class="headerlink" href="#step-4-install-ubuntu" title="Permanent link">&para;</a></h2>
+<h3 id="windows-macos-intel-desktop-installer">Windows &amp; macOS Intel (Desktop Installer)<a class="headerlink" href="#windows-macos-intel-desktop-installer" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Press <code>Ok</code> on the annoucement pop up notifications</li>
+<li>VM boots into Ubuntu installer</li>
+<li>Select <strong>Try or Install Ubuntu</strong> if prompted</li>
+<li>Choose language</li>
+<li>Keyboard layout → <strong>Continue</strong></li>
+<li>
+<p>Updates &amp; other software:</p>
+</li>
+<li>
+<p><strong>Normal installation</strong></p>
+</li>
+<li><strong>Download updates while installing Ubuntu</strong></li>
+<li><strong>Install third-party software ...</strong></li>
+<li>
+<p>Installation type:</p>
+</li>
+<li>
+<p><strong>Erase disk and install Ubuntu</strong> (This affects only the space you had given the virtual machine, not your entire computer)</p>
+</li>
+<li>Click on <code>Install Now</code> followed by <code>Continue</code> if promted to <code>Write the changes to disks?</code></li>
+<li>Select time zone</li>
+<li>Create user account</li>
+<li>Click <strong>Install</strong></li>
+<li>Restart when prompted</li>
+</ol>
+<blockquote>
+<p><strong>When asked to upgrade Ubuntu, such as going from the 22.04 installed to 24.04, it is imperative that you do not upgrade</strong></p>
+</blockquote>
+<hr />
+<h3 id="macos-apple-silicon-server-installer">macOS Apple Silicon (Server Installer)<a class="headerlink" href="#macos-apple-silicon-server-installer" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Select <strong>Try or Install Ubuntu</strong> if prompted (use the arrow keys to change options and press <code>Enter</code> to select options)</li>
+<li>VM boots into <strong>text-based Ubuntu Server installer</strong></li>
+<li>
+<p>Choose:</p>
+</li>
+<li>
+<p>Language</p>
+</li>
+<li>Keyboard layout</li>
+<li>If prompted to update the installer, feel free to do so</li>
+<li>Choose the base for the installation:<ul>
+<li><strong>Ubuntu Server</strong></li>
+<li><strong>Search for third-party drivers</strong></li>
+</ul>
+</li>
+<li>
+<p>Network:</p>
+</li>
+<li>
+<p>Accept default (automatic)</p>
+</li>
+<li>
+<p>Storage:</p>
+</li>
+<li>
+<p><strong>Use entire disk</strong> (This affects only the space you had given the virtual machine, not your entire computer)</p>
+</li>
+<li>Accept defaults</li>
+<li>Click on <code>Continue</code> if prompted about destructive action on the disk (This affects only the space you had given the virtual machine, not your entire computer)</li>
+<li>
+<p>Profile setup:</p>
+</li>
+<li>
+<p>Username</p>
+</li>
+<li>Password</li>
+<li>Skip Ubuntu Pro</li>
+<li>
+<p>SSH:</p>
+</li>
+<li>
+<p>Optional (can skip)</p>
+</li>
+<li>Can skip any additional options</li>
+<li>Finish installation (might take a while)</li>
+<li>Reboot</li>
+<li>Press <code>Enter</code> if prompted to remove installation media</li>
+<li>Log in at the terminal</li>
+</ol>
+<p>At this point, <strong>no desktop is installed yet</strong>.</p>
+<hr />
+<h2 id="step-5-install-ubuntu-desktop-apple-silicon-only">Step 5: Install Ubuntu Desktop (Apple Silicon Only)<a class="headerlink" href="#step-5-install-ubuntu-desktop-apple-silicon-only" title="Permanent link">&para;</a></h2>
+<p>After logging in, run:</p>
+<pre><code class="language-bash">sudo apt update
+sudo apt upgrade -y
+sudo apt install ubuntu-desktop -y
+</code></pre>
+<p>Press enter if asked <code>Which services should be restarted</code></p>
+<blockquote>
+<p>This may take several minutes.</p>
+</blockquote>
+<p>When finished:</p>
+<pre><code class="language-bash">sudo reboot
+</code></pre>
+<p>After reboot, the <strong>Ubuntu 22.04 Desktop (GNOME)</strong> will load.</p>
+<blockquote>
+<p><strong>When asked to upgrade Ubuntu, such as going from the 22.04 installed to 24.04, it is imperative that you do not upgrade</strong></p>
+</blockquote>
+<hr />
+<h2 id="step-6-install-vmware-tools-all-platforms">Step 6: Install VMware Tools (All Platforms)<a class="headerlink" href="#step-6-install-vmware-tools-all-platforms" title="Permanent link">&para;</a></h2>
+<p>VMware Tools improves:</p>
+<ul>
+<li>Display resolution</li>
+<li>Mouse integration</li>
+<li>Performance</li>
+</ul>
+<h3 id="inside-the-ubuntu-vm">Inside the Ubuntu VM<a class="headerlink" href="#inside-the-ubuntu-vm" title="Permanent link">&para;</a></h3>
+<p>In Ubuntu, open a terminal (go on apps and look for <code>Terminal</code> and run:</p>
+<pre><code class="language-bash">sudo apt install open-vm-tools-desktop -y
+sudo reboot
+</code></pre>
+<hr />
+<h2 id="step-7-verification">Step 7: Verification<a class="headerlink" href="#step-7-verification" title="Permanent link">&para;</a></h2>
+<p>After reboot, confirm:</p>
+<ul>
+<li>Ubuntu desktop loads successfully</li>
+<li>Screen resizes automatically</li>
+<li>Mouse moves smoothly in and out of the VM</li>
+<li>Feel free to play around with the display settings to optimize it</li>
+</ul>
+<hr />
+<h2 id="platform-summary-verified">Platform Summary (Verified)<a class="headerlink" href="#platform-summary-verified" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Ubuntu Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td>Ubuntu 22.04 Desktop (amd64 ISO)</td>
+</tr>
+<tr>
+<td>macOS Intel</td>
+<td>Ubuntu 22.04 Desktop (amd64 ISO)</td>
+</tr>
+<tr>
+<td>macOS Apple Silicon</td>
+<td>Ubuntu 22.04 Server (ARM) + <code>ubuntu-desktop</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Installing Ubuntu in a VM <strong>does not affect your real operating system</strong></li>
+<li>Apple Silicon Macs require <strong>ARM-based Linux</strong></li>
+<li>Using Ubuntu Server + desktop is <strong>fully supported and standard practice</strong></li>
+</ul>
+<h2 id="verify-ubuntu-version">Verify Ubuntu Version<a class="headerlink" href="#verify-ubuntu-version" title="Permanent link">&para;</a></h2>
+<p>Open a terminal in your Ubuntu 22 environment and run:</p>
+<pre><code class="language-bash">lsb_release -a
+</code></pre>
+<p>You should see information about which Ubuntu version you have installed</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "toc.integrate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

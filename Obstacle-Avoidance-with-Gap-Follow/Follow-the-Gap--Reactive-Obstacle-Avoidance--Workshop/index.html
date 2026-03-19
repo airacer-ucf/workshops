@@ -1,0 +1,2361 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../Intro-to-ROS-2/vmware-ubuntu/">
+      
+      
+        <link rel="next" href="../../PID-and-Wall-Following/PID_Controller_%26_Wall_Following_Technique_-_Workshop/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+    
+    
+      
+        <title>Follow the Gap - Reactive Obstacle Avoidance - AI Racer Workshops</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#follow-the-gap-reactive-obstacle-avoidance" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AI Racer Workshops" class="md-header__button md-logo" aria-label="AI Racer Workshops" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Racer Workshops
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Follow the Gap - Reactive Obstacle Avoidance
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI Racer Workshops" class="md-nav__button md-logo" aria-label="AI Racer Workshops" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Racer Workshops
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro to ROS 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Intro to ROS 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Intro-to-ROS-2/Intro_to_ROS_2_Workshop_Manual/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro to ROS 2 Workshop Manual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Intro-to-ROS-2/ros2-install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installing ROS 2 Humble on Ubuntu 22.04
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Intro-to-ROS-2/vmware-ubuntu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installing Ubuntu 22.04 on VMware virtual machine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obstacle Avoidance with Gap Follow
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Obstacle Avoidance with Gap Follow
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follow the Gap - Reactive Obstacle Avoidance
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Follow the Gap - Reactive Obstacle Avoidance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-understanding-follow-the-gap-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Understanding Follow the Gap Algorithm
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Understanding Follow the Gap Algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-follow-the-gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Follow the Gap?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algorithm-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Algorithm Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detailed-step-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detailed Step Breakdown
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Detailed Step Breakdown">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-preprocess-lidar-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Preprocess LiDAR Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-find-closest-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Find Closest Point
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-create-safety-bubble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Create Safety Bubble
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-find-maximum-gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Find Maximum Gap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-find-best-point-in-gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Find Best Point in Gap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-actuate-the-car" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Actuate the Car
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-setting-up-the-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: Setting Up the Workspace
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: Setting Up the Workspace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-21-create-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.1: Create Package
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-22-create-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.2: Create Directory Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-23-make-sure-packagexml-has-the-right-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.3: Make sure package.xml has the right dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-24-update-setuppy-to-include-entry-points-config-and-launch-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.4: Update setup.py to include entry points, config, and launch files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-implementing-follow-the-gap-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3: Implementing Follow the Gap - Step by Step
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3: Implementing Follow the Gap - Step by Step">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-31-create-basic-node-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.1: Create Basic Node Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-32-implement-preprocess_lidar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.2: Implement preprocess_lidar()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-33-implement-find-closest-point-and-safety-bubble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.3: Implement Find Closest Point and Safety Bubble
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-34-implement-find_max_gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.4: Implement find_max_gap()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-35-implement-find_best_point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.5: Implement find_best_point()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-36-implement-actuation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.6: Implement Actuation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-configuration-and-launch-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4: Configuration and Launch Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 4: Configuration and Launch Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-41-create-parameter-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4.1: Create Parameter File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-42-create-launch-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4.2: Create Launch File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-43-build-the-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4.3: Build the Package
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5-testing-in-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5: Testing in Simulator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 5: Testing in Simulator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-51-launch-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5.1: Launch System
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-52-initial-observations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5.2: Initial Observations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-53-monitor-and-debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5.3: Monitor and Debug
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-6-advanced-improvements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 6: Advanced Improvements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 6: Advanced Improvements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-61-add-gap-quality-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6.1: Add Gap Quality Metric
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-62-add-disparity-extender" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6.2: Add Disparity Extender
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-63-add-dynamic-bubble-radius" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6.3: Add Dynamic Bubble Radius
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-learned" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Learned:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaways-for-autonomous-racing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways for Autonomous Racing:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting Guide
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PID and Wall Following
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PID and Wall Following
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PID-and-Wall-Following/PID_Controller_%26_Wall_Following_Technique_-_Workshop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wall Following with PID Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation and AEB Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation and AEB Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Simulation-and-AEB-Systems/AEB-Systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automatic Emergency Braking (AEB) with iTTC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Simulation-and-AEB-Systems/F1tenthGymROS-Install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    F1TENTH Gym ROS Setup Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="follow-the-gap-reactive-obstacle-avoidance">Follow the Gap - Reactive Obstacle Avoidance<a class="headerlink" href="#follow-the-gap-reactive-obstacle-avoidance" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>You will implement the "Follow the Gap" algorithm, a reactive method for obstacle avoidance. Unlike the PID-based wall following from Lab 6, this algorithm makes instantaneous decisions based on LiDAR data to find and navigate through the largest gap (free space) in front of the car. This is crucial for dynamic obstacle avoidance in racing scenarios.</p>
+<p><strong>Platform:</strong> Ubuntu 22.04 (VMware), ROS2 Humble<br />
+<strong>Simulator:</strong> F1TENTH Simulator</p>
+<hr />
+<h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
+<p>By the end of this lab, you will be able to:
+1. Implement reactive obstacle avoidance algorithms
+2. Process and filter LiDAR data in real-time
+3. Identify free space and obstacles using range data
+4. Find the largest navigable gap in sensor data
+5. Select optimal goal points for navigation
+6. Combine perception and control for autonomous navigation</p>
+<hr />
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>Ensure ROS2 Humble and F1TENTH simulator are installed:</p>
+<pre><code class="language-bash">source /opt/ros/humble/setup.bash
+ros2 pkg list | grep f1tenth
+</code></pre>
+<hr />
+<h2 id="part-1-understanding-follow-the-gap-algorithm">Part 1: Understanding Follow the Gap Algorithm<a class="headerlink" href="#part-1-understanding-follow-the-gap-algorithm" title="Permanent link">&para;</a></h2>
+<h3 id="what-is-follow-the-gap">What is Follow the Gap?<a class="headerlink" href="#what-is-follow-the-gap" title="Permanent link">&para;</a></h3>
+<p><strong>Follow the Gap</strong> is a reactive obstacle avoidance method that:
+- Finds the largest "gap" (free space) in LiDAR data
+- Steers toward the center or furthest point in that gap
+- Works in real-time without mapping or planning
+- Handles dynamic obstacles naturally</p>
+<h3 id="algorithm-overview">Algorithm Overview<a class="headerlink" href="#algorithm-overview" title="Permanent link">&para;</a></h3>
+<pre><code>1. PREPROCESS: Clean and filter LiDAR data
+   ↓
+2. FIND CLOSEST POINT: Identify nearest obstacle
+   ↓
+3. SAFETY BUBBLE: Clear area around closest point
+   ↓
+4. FIND MAX GAP: Locate largest continuous free space
+   ↓
+5. FIND BEST POINT: Select target within gap
+   ↓
+6. ACTUATE: Steer toward target point
+</code></pre>
+<h3 id="detailed-step-breakdown">Detailed Step Breakdown<a class="headerlink" href="#detailed-step-breakdown" title="Permanent link">&para;</a></h3>
+<h4 id="step-1-preprocess-lidar-data">Step 1: Preprocess LiDAR Data<a class="headerlink" href="#step-1-preprocess-lidar-data" title="Permanent link">&para;</a></h4>
+<p><strong>Why?</strong> Raw LiDAR data is noisy and may contain outliers.</p>
+<p><strong>Methods:</strong>
+- <strong>Windowed averaging</strong>: Smooth data by averaging neighboring points
+- <strong>Range limiting</strong>: Ignore points beyond certain distance (e.g., &gt; 3m)
+- <strong>Median filtering</strong>: Remove spikes and noise</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python"># Raw ranges: [1.2, 5.5, 1.3, 1.1, 1.4, ...]
+# After preprocessing: [1.2, 1.3, 1.3, 1.1, 1.4, ...]
+#                       (outlier 5.5 removed/smoothed)
+</code></pre>
+<h4 id="step-2-find-closest-point">Step 2: Find Closest Point<a class="headerlink" href="#step-2-find-closest-point" title="Permanent link">&para;</a></h4>
+<p><strong>Why?</strong> The closest obstacle is the most dangerous - we must avoid it.</p>
+<p><strong>Method:</strong></p>
+<pre><code class="language-python">closest_idx = np.argmin(ranges)
+closest_distance = ranges[closest_idx]
+</code></pre>
+<h4 id="step-3-create-safety-bubble">Step 3: Create Safety Bubble<a class="headerlink" href="#step-3-create-safety-bubble" title="Permanent link">&para;</a></h4>
+<p><strong>Why?</strong> To ensure we don't get too close to obstacles, we create a "bubble" around the closest point where we won't navigate.</p>
+<p><strong>Method:</strong>
+- Calculate bubble radius (e.g., 0.3-0.5 meters)
+- Set all points within this bubble to 0 (marking them as obstacles)</p>
+<p><strong>Geometry:</strong></p>
+<pre><code>For each point at angle θ and distance r:
+- If point is within bubble_radius of closest_point:
+  - Set range[i] = 0
+</code></pre>
+<h4 id="step-4-find-maximum-gap">Step 4: Find Maximum Gap<a class="headerlink" href="#step-4-find-maximum-gap" title="Permanent link">&para;</a></h4>
+<p><strong>Why?</strong> The largest gap is the safest and most navigable space.</p>
+<p><strong>Method:</strong>
+- Find all sequences of non-zero consecutive elements
+- Select the longest sequence
+- Return start and end indices</p>
+<p><strong>Example:</strong></p>
+<pre><code>ranges: [0, 0, 0, 2.1, 2.3, 2.5, 0, 0, 3.1, 3.2, 3.3, 3.4, 0, 0]
+gaps:          [---gap1---]        [------gap2------]
+max gap: gap2 (indices 8-11, length 4)
+</code></pre>
+<h4 id="step-5-find-best-point-in-gap">Step 5: Find Best Point in Gap<a class="headerlink" href="#step-5-find-best-point-in-gap" title="Permanent link">&para;</a></h4>
+<p><strong>Why?</strong> We need a specific target to steer toward within the gap.</p>
+<p><strong>Strategies:</strong>
+1. <strong>Naive</strong>: Choose furthest point in gap
+2. <strong>Centered</strong>: Choose middle of gap
+3. <strong>Weighted</strong>: Balance between furthest and centered
+4. <strong>Advanced</strong>: Consider current velocity and steering constraints</p>
+<p><strong>Example:</strong></p>
+<pre><code>Gap: [3.1, 3.2, 3.3, 3.4]
+Furthest: 3.4 (index 11)
+Centered: Between 3.2 and 3.3 (index 9-10)
+</code></pre>
+<h4 id="step-6-actuate-the-car">Step 6: Actuate the Car<a class="headerlink" href="#step-6-actuate-the-car" title="Permanent link">&para;</a></h4>
+<p><strong>Why?</strong> Convert target point to steering angle and velocity.</p>
+<p><strong>Method:</strong>
+- Calculate angle to best point
+- Set steering angle proportional to this angle
+- Adjust velocity based on gap size and steering angle</p>
+<hr />
+<h2 id="part-2-setting-up-the-workspace">Part 2: Setting Up the Workspace<a class="headerlink" href="#part-2-setting-up-the-workspace" title="Permanent link">&para;</a></h2>
+<h3 id="step-21-create-package">Step 2.1: Create Package<a class="headerlink" href="#step-21-create-package" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">cd ~/ros2_ws/src
+ros2 pkg create follow_the_gap --build-type ament_python \
+  --dependencies rclpy sensor_msgs ackermann_msgs std_msgs
+</code></pre>
+<h3 id="step-22-create-directory-structure">Step 2.2: Create Directory Structure<a class="headerlink" href="#step-22-create-directory-structure" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">cd follow_the_gap
+mkdir -p launch config
+</code></pre>
+<p><strong>Resulting structure:</strong></p>
+<pre><code>follow_the_gap/
+├── follow_the_gap/
+│   ├── __init__.py
+│   └── reactive_node.py        # Main implementation (we will create)
+├── launch/
+│   └── follow_gap.launch.py    # Launch file (we will create)
+├── config/
+│   └── gap_params.yaml         # Parameters (we will create)
+├── package.xml
+├── setup.py
+└── resource/
+</code></pre>
+<h3 id="step-23-make-sure-packagexml-has-the-right-dependencies">Step 2.3: Make sure <code>package.xml</code> has the right dependencies<a class="headerlink" href="#step-23-make-sure-packagexml-has-the-right-dependencies" title="Permanent link">&para;</a></h3>
+<p><strong>File:</strong> <code>~/ros2_ws/src/follow_the_gap/package.xml</code></p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;?xml-model href=&quot;http://download.ros.org/schema/package_format3.xsd&quot; schematypens=&quot;http://www.w3.org/2001/XMLSchema&quot;?&gt;
+&lt;package format=&quot;3&quot;&gt;
+  &lt;name&gt;follow_the_gap&lt;/name&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;description&gt;Follow the Gap reactive obstacle avoidance for F1TENTH&lt;/description&gt;
+  &lt;maintainer email=&quot;student@example.com&quot;&gt;Student Name&lt;/maintainer&gt;
+  &lt;license&gt;MIT&lt;/license&gt;
+
+  &lt;depend&gt;rclpy&lt;/depend&gt;
+  &lt;depend&gt;sensor_msgs&lt;/depend&gt;
+  &lt;depend&gt;ackermann_msgs&lt;/depend&gt;
+  &lt;depend&gt;std_msgs&lt;/depend&gt;
+
+  &lt;test_depend&gt;ament_copyright&lt;/test_depend&gt;
+  &lt;test_depend&gt;ament_flake8&lt;/test_depend&gt;
+  &lt;test_depend&gt;ament_pep257&lt;/test_depend&gt;
+  &lt;test_depend&gt;python3-pytest&lt;/test_depend&gt;
+
+  &lt;export&gt;
+    &lt;build_type&gt;ament_python&lt;/build_type&gt;
+  &lt;/export&gt;
+&lt;/package&gt;
+</code></pre>
+<h3 id="step-24-update-setuppy-to-include-entry-points-config-and-launch-files">Step 2.4: Update setup.py to include entry points, config, and launch files<a class="headerlink" href="#step-24-update-setuppy-to-include-entry-points-config-and-launch-files" title="Permanent link">&para;</a></h3>
+<p><strong>File:</strong> <code>~/ros2_ws/src/follow_the_gap/setup.py</code></p>
+<pre><code class="language-python">from setuptools import setup
+import os
+from glob import glob
+
+package_name = 'follow_the_gap'
+
+setup(
+    name=package_name,
+    version='1.0.0',
+    packages=[package_name],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name, 'launch'),
+            glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
+        (os.path.join('share', package_name, 'config'),
+            glob(os.path.join('config', '*.yaml'))),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='Student Name',
+    maintainer_email='student@example.com',
+    description='Follow the Gap obstacle avoidance',
+    license='MIT',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'reactive_node = follow_the_gap.reactive_node:main',
+        ],
+    },
+)
+</code></pre>
+<hr />
+<h2 id="part-3-implementing-follow-the-gap-step-by-step">Part 3: Implementing Follow the Gap - Step by Step<a class="headerlink" href="#part-3-implementing-follow-the-gap-step-by-step" title="Permanent link">&para;</a></h2>
+<h3 id="step-31-create-basic-node-structure">Step 3.1: Create Basic Node Structure<a class="headerlink" href="#step-31-create-basic-node-structure" title="Permanent link">&para;</a></h3>
+<p><strong>File:</strong> <code>~/ros2_ws/src/follow_the_gap/follow_the_gap/reactive_node.py</code></p>
+<pre><code class="language-python">#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+import numpy as np
+from sensor_msgs.msg import LaserScan
+from ackermann_msgs.msg import AckermannDriveStamped, AckermannDrive
+
+
+class ReactiveFollowGap(Node):
+    &quot;&quot;&quot; 
+    Implement Follow the Gap reactive obstacle avoidance algorithm
+    &quot;&quot;&quot;
+    def __init__(self):
+        super().__init__('reactive_node')
+
+        # Declare parameters
+        self.declare_parameter('bubble_radius', 0.3)  # meters
+        self.declare_parameter('preprocess_conv_size', 3)  # window size for averaging
+        self.declare_parameter('max_lidar_range', 3.0)  # max range to consider (meters)
+        self.declare_parameter('speed_min', 0.5)  # minimum speed (m/s)
+        self.declare_parameter('speed_max', 2.0)  # maximum speed (m/s)
+        self.declare_parameter('steering_gain', 1.0)  # steering proportional gain
+
+        # Get parameters
+        self.bubble_radius = self.get_parameter('bubble_radius').value
+        self.preprocess_conv_size = self.get_parameter('preprocess_conv_size').value
+        self.max_lidar_range = self.get_parameter('max_lidar_range').value
+        self.speed_min = self.get_parameter('speed_min').value
+        self.speed_max = self.get_parameter('speed_max').value
+        self.steering_gain = self.get_parameter('steering_gain').value
+
+        # Topics
+        lidarscan_topic = '/scan'
+        drive_topic = '/drive'
+
+        # Create subscriber to LiDAR
+        self.lidar_sub = self.create_subscription(
+            LaserScan,
+            lidarscan_topic,
+            self.lidar_callback,
+            10)
+
+        # Create publisher to drive
+        self.drive_pub = self.create_publisher(
+            AckermannDriveStamped,
+            drive_topic,
+            10)
+
+        self.get_logger().info('='*50)
+        self.get_logger().info('Follow the Gap Node Initialized')
+        self.get_logger().info(f'Bubble Radius: {self.bubble_radius}m')
+        self.get_logger().info(f'Max LiDAR Range: {self.max_lidar_range}m')
+        self.get_logger().info(f'Speed Range: {self.speed_min}-{self.speed_max} m/s')
+        self.get_logger().info('='*50)
+
+    def preprocess_lidar(self, ranges):
+        &quot;&quot;&quot; 
+        Preprocess the LiDAR scan array.
+        1. Setting each value to the mean over some window
+        2. Rejecting high values (&gt; max_lidar_range)
+
+        Args:
+            ranges: array of LiDAR ranges
+
+        Returns:
+            proc_ranges: processed array of ranges
+        &quot;&quot;&quot;
+        # TODO: Implement preprocessing
+        proc_ranges = np.array(ranges)
+        return proc_ranges
+
+    def find_max_gap(self, free_space_ranges):
+        &quot;&quot;&quot; 
+        Return the start index &amp; end index of the max gap in free_space_ranges
+
+        Args:
+            free_space_ranges: array with 0s for obstacles and non-zero for free space
+
+        Returns:
+            start_idx: start index of max gap
+            end_idx: end index of max gap
+        &quot;&quot;&quot;
+        # TODO: Implement max gap finding
+        return 0, 0
+
+    def find_best_point(self, start_i, end_i, ranges):
+        &quot;&quot;&quot;
+        Start_i &amp; end_i are start and end indices of max-gap range
+        Return index of best point in ranges
+        Naive: Choose the furthest point within ranges and go there
+
+        Args:
+            start_i: start index of gap
+            end_i: end index of gap
+            ranges: array of LiDAR ranges
+
+        Returns:
+            best_idx: index of best point in gap
+        &quot;&quot;&quot;
+        # TODO: Implement best point selection
+        return 0
+
+    def lidar_callback(self, data):
+        &quot;&quot;&quot; 
+        Process each LiDAR scan as per the Follow Gap algorithm &amp; 
+        publish an AckermannDriveStamped Message
+
+        Args:
+            data: LaserScan message
+        &quot;&quot;&quot;
+        ranges = np.array(data.ranges)
+
+        # Step 1: Preprocess
+        proc_ranges = self.preprocess_lidar(ranges)
+
+        # TODO: Find closest point
+
+        # TODO: Eliminate points inside bubble
+
+        # TODO: Find max length gap
+
+        # TODO: Find the best point in the gap
+
+        # TODO: Publish Drive message
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    print(&quot;Follow the Gap Initialized&quot;)
+    reactive_node = ReactiveFollowGap()
+    try:
+        rclpy.spin(reactive_node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        reactive_node.destroy_node()
+        if rclpy.ok():
+           rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<p><strong>Test basic structure:</strong></p>
+<pre><code class="language-bash">cd ~/ros2_ws
+colcon build --packages-select follow_the_gap
+source install/setup.bash
+ros2 run follow_the_gap reactive_node
+</code></pre>
+<p>Press Ctrl+C to stop. You should see initialization messages.</p>
+<hr />
+<h3 id="step-32-implement-preprocess_lidar">Step 3.2: Implement preprocess_lidar()<a class="headerlink" href="#step-32-implement-preprocess_lidar" title="Permanent link">&para;</a></h3>
+<pre><code class="language-python">def preprocess_lidar(self, ranges):
+    &quot;&quot;&quot; 
+    Preprocess the LiDAR scan array.
+    1. Apply mean filter over a window
+    2. Clip values to max_lidar_range
+    3. Handle inf and nan values
+
+    Args:
+        ranges: array of LiDAR ranges
+
+    Returns:
+        proc_ranges: processed array of ranges
+    &quot;&quot;&quot;
+    # Convert to numpy array
+    proc_ranges = np.array(ranges)
+
+    # Replace inf and nan with max_lidar_range
+    proc_ranges = np.nan_to_num(proc_ranges, 
+                                 nan=self.max_lidar_range, 
+                                 posinf=self.max_lidar_range, 
+                                 neginf=0.0)
+
+    # Clip to max range - anything beyond max_lidar_range is set to max_lidar_range
+    proc_ranges = np.clip(proc_ranges, 0, self.max_lidar_range)
+
+    # Apply mean filter (moving average) for smoothing
+    # Use convolution for efficient averaging
+    if self.preprocess_conv_size &gt; 1:
+        kernel = np.ones(self.preprocess_conv_size) / self.preprocess_conv_size
+        proc_ranges = np.convolve(proc_ranges, kernel, mode='same')
+
+    return proc_ranges
+</code></pre>
+<p><strong>Testing Point 1: Test Preprocessing</strong></p>
+<p>Add temporary test code in <code>lidar_callback</code>:</p>
+<pre><code class="language-python">def lidar_callback(self, data):
+    ranges = np.array(data.ranges)
+    proc_ranges = self.preprocess_lidar(ranges)
+
+    # Debug: Print comparison
+    self.get_logger().info(
+        f'Raw range [0]: {ranges[0]:.2f} | Processed: {proc_ranges[0]:.2f}',
+        throttle_duration_sec=2.0)
+</code></pre>
+<p>Build and test:</p>
+<pre><code class="language-bash">cd ~/ros2_ws
+colcon build --packages-select follow_the_gap
+source install/setup.bash
+
+# Terminal 1: Launch simulator (Make sure to have source the simulator first)
+ros2 launch f1tenth_gym_ros gym_bridge_launch.py
+
+# Terminal 2: Run node
+ros2 run follow_the_gap reactive_node
+</code></pre>
+<p>You should see preprocessed ranges being printed.</p>
+<hr />
+<h3 id="step-33-implement-find-closest-point-and-safety-bubble">Step 3.3: Implement Find Closest Point and Safety Bubble<a class="headerlink" href="#step-33-implement-find-closest-point-and-safety-bubble" title="Permanent link">&para;</a></h3>
+<p>Update <code>lidar_callback</code>:</p>
+<pre><code class="language-python">def lidar_callback(self, data):
+    &quot;&quot;&quot; 
+    Process each LiDAR scan as per the Follow Gap algorithm
+    &quot;&quot;&quot;
+    ranges = np.array(data.ranges)
+
+    # Step 1: Preprocess the LiDAR scan
+    proc_ranges = self.preprocess_lidar(ranges)
+
+    # Step 2: Find closest point to LiDAR
+    # Ignore zero values (they represent obstacles from bubble or invalid)
+    # Create a copy to modify
+    proc_ranges_copy = proc_ranges.copy()
+
+    # Find the closest point (minimum non-zero distance)
+    nonzero_ranges = proc_ranges_copy[proc_ranges_copy &gt; 0]
+    if len(nonzero_ranges) == 0:
+        # No valid ranges, stop the car
+        self.get_logger().warn('No valid LiDAR ranges detected!')
+        self.publish_drive(0.0, 0.0)
+        return
+
+    closest_distance = np.min(nonzero_ranges)
+    closest_idx = np.argmin(proc_ranges_copy)
+
+    # Step 3: Eliminate all points inside 'bubble' (set them to zero)
+    # Calculate bubble indices based on closest point
+    bubble_indices = self.get_bubble_indices(data, closest_idx, closest_distance)
+    proc_ranges_copy[bubble_indices] = 0.0
+
+    # Debug logging
+    self.get_logger().debug(
+        f'Closest point: idx={closest_idx}, dist={closest_distance:.2f}m, '
+        f'bubble_size={len(bubble_indices)}',
+        throttle_duration_sec=1.0)
+
+    # TODO: Continue with finding max gap...
+</code></pre>
+<p>Add helper method for safety bubble:</p>
+<pre><code class="language-python">def get_bubble_indices(self, data, closest_idx, closest_distance):
+    &quot;&quot;&quot;
+    Get indices of all points within the safety bubble around closest point.
+
+    Args:
+        data: LaserScan message (for angle info)
+        closest_idx: index of closest point
+        closest_distance: distance to closest point
+
+    Returns:
+        bubble_indices: array of indices within bubble
+    &quot;&quot;&quot;
+    # Calculate the angle subtended by the bubble
+    # Using small angle approximation: angle ≈ bubble_radius / distance
+    if closest_distance == 0:
+        closest_distance = 0.1  # Avoid division by zero
+
+    bubble_angle = self.bubble_radius / closest_distance
+
+    # Convert angle to number of indices
+    angle_increment = data.angle_increment
+    bubble_idx_range = int(np.ceil(bubble_angle / angle_increment))
+
+    # Get start and end indices of bubble
+    start_idx = max(0, closest_idx - bubble_idx_range)
+    end_idx = min(len(data.ranges) - 1, closest_idx + bubble_idx_range)
+
+    # Return all indices in bubble
+    bubble_indices = np.arange(start_idx, end_idx + 1)
+
+    return bubble_indices
+</code></pre>
+<p><strong>Testing Point 2: Verify Safety Bubble</strong></p>
+<p>Add visualization:</p>
+<pre><code class="language-python"># After creating bubble
+self.get_logger().info(
+    f'Safety bubble: {len(bubble_indices)} points cleared around index {closest_idx}',
+    throttle_duration_sec=1.0)
+</code></pre>
+<hr />
+<h3 id="step-34-implement-find_max_gap">Step 3.4: Implement find_max_gap()<a class="headerlink" href="#step-34-implement-find_max_gap" title="Permanent link">&para;</a></h3>
+<pre><code class="language-python">def find_max_gap(self, free_space_ranges):
+    &quot;&quot;&quot; 
+    Return the start index &amp; end index of the max gap in free_space_ranges.
+    A gap is a continuous sequence of non-zero values.
+
+    Args:
+        free_space_ranges: array with 0s for obstacles and non-zero for free space
+
+    Returns:
+        start_idx: start index of max gap
+        end_idx: end index of max gap (inclusive)
+    &quot;&quot;&quot;
+    # Find where free space begins and ends
+    # non-zero values represent free space
+    mask = free_space_ranges &gt; 0
+
+    # Find the boundaries of all gaps
+    # np.diff finds changes (0-&gt;1 or 1-&gt;0)
+    diff = np.diff(np.concatenate(([0], mask.astype(int), [0])))
+
+    # starts: where diff changes from 0 to 1 (gap begins)
+    # ends: where diff changes from 1 to 0 (gap ends)
+    starts = np.where(diff == 1)[0]
+    ends = np.where(diff == -1)[0]
+
+    # If no gaps found, return invalid indices
+    if len(starts) == 0:
+        self.get_logger().warn('No gaps found in LiDAR data!')
+        return 0, 0
+
+    # Calculate gap lengths
+    gap_lengths = ends - starts
+
+    # Find the maximum gap
+    max_gap_idx = np.argmax(gap_lengths)
+
+    start_idx = starts[max_gap_idx]
+    end_idx = ends[max_gap_idx] - 1  # -1 because ends is exclusive
+
+    return start_idx, end_idx
+</code></pre>
+<p><strong>Testing Point 3: Test Gap Finding</strong></p>
+<p>Add to <code>lidar_callback</code> after bubble creation:</p>
+<pre><code class="language-python"># Find max length gap
+start_i, end_i = self.find_max_gap(proc_ranges_copy)
+
+# Debug
+gap_length = end_i - start_i + 1
+self.get_logger().info(
+    f'Max gap: start={start_i}, end={end_i}, length={gap_length}',
+    throttle_duration_sec=1.0)
+</code></pre>
+<hr />
+<h3 id="step-35-implement-find_best_point">Step 3.5: Implement find_best_point()<a class="headerlink" href="#step-35-implement-find_best_point" title="Permanent link">&para;</a></h3>
+<pre><code class="language-python">def find_best_point(self, start_i, end_i, ranges):
+    &quot;&quot;&quot;
+    Find the best point in the gap to navigate toward.
+
+    Strategies:
+    1. Naive: furthest point in gap
+    2. Centered: middle of gap
+    3. Weighted average of furthest and centered
+
+    Args:
+        start_i: start index of gap
+        end_i: end index of gap
+        ranges: array of LiDAR ranges
+
+    Returns:
+        best_idx: index of best point in gap
+    &quot;&quot;&quot;
+    # Handle edge case
+    if start_i &gt;= end_i or end_i &gt;= len(ranges):
+        return len(ranges) // 2  # Default to center
+
+    # Extract gap ranges
+    gap_ranges = ranges[start_i:end_i+1]
+
+    # Strategy 1: Furthest point (naive)
+    furthest_idx_in_gap = np.argmax(gap_ranges)
+    furthest_idx = start_i + furthest_idx_in_gap
+
+    # Strategy 2: Centered point
+    centered_idx = (start_i + end_i) // 2
+
+    # Strategy 3: Weighted average (80% furthest, 20% centered)
+    # This balances safety (center) with progress (furthest)
+    best_idx = int(0.8 * furthest_idx + 0.2 * centered_idx)
+
+    # Alternative: just use furthest
+    # best_idx = furthest_idx
+
+    # Alternative: just use centered
+    # best_idx = centered_idx
+
+    return best_idx
+</code></pre>
+<hr />
+<h3 id="step-36-implement-actuation">Step 3.6: Implement Actuation<a class="headerlink" href="#step-36-implement-actuation" title="Permanent link">&para;</a></h3>
+<p>Add helper method to publish drive commands:</p>
+<pre><code class="language-python">def publish_drive(self, steering_angle, speed):
+    &quot;&quot;&quot;
+    Publish AckermannDriveStamped message.
+
+    Args:
+        steering_angle: desired steering angle (radians)
+        speed: desired speed (m/s)
+    &quot;&quot;&quot;
+    drive_msg = AckermannDriveStamped()
+    drive_msg.header.stamp = self.get_clock().now().to_msg()
+    drive_msg.header.frame_id = 'base_link'
+    drive_msg.drive.steering_angle = float(steering_angle)
+    drive_msg.drive.speed = float(speed)
+
+    self.drive_pub.publish(drive_msg)
+</code></pre>
+<p>Complete the <code>lidar_callback</code>:</p>
+<pre><code class="language-python">def lidar_callback(self, data):
+    &quot;&quot;&quot; 
+    Process each LiDAR scan as per the Follow Gap algorithm
+    &quot;&quot;&quot;
+    ranges = np.array(data.ranges)
+
+    # Step 1: Preprocess
+    proc_ranges = self.preprocess_lidar(ranges)
+
+    # Step 2: Find closest point
+    proc_ranges_copy = proc_ranges.copy()
+    nonzero_ranges = proc_ranges_copy[proc_ranges_copy &gt; 0]
+
+    if len(nonzero_ranges) == 0:
+        self.get_logger().warn('No valid LiDAR ranges!')
+        self.publish_drive(0.0, 0.0)
+        return
+
+    closest_distance = np.min(nonzero_ranges)
+    closest_idx = np.argmin(proc_ranges_copy)
+
+    # Step 3: Eliminate points inside bubble (safety bubble)
+    bubble_indices = self.get_bubble_indices(data, closest_idx, closest_distance)
+    proc_ranges_copy[bubble_indices] = 0.0
+
+    # Step 4: Find max length gap
+    start_i, end_i = self.find_max_gap(proc_ranges_copy)
+
+    # Check if valid gap was found
+    if start_i == 0 and end_i == 0:
+        self.get_logger().warn('No valid gap found!')
+        self.publish_drive(0.0, 0.5)  # Slow down
+        return
+
+    # Step 5: Find the best point in the gap
+    best_idx = self.find_best_point(start_i, end_i, proc_ranges_copy)
+
+    # Step 6: Calculate steering angle to best point
+    # Convert index to angle
+    angle_to_best = data.angle_min + best_idx * data.angle_increment
+
+    # Apply steering gain
+    steering_angle = self.steering_gain * angle_to_best
+
+    # Clamp steering angle to reasonable limits
+    max_steering = np.deg2rad(30.0)  # 30 degrees max
+    steering_angle = np.clip(steering_angle, -max_steering, max_steering)
+
+    # Step 7: Calculate speed based on steering angle and gap size
+    # More steering = slower speed
+    # Larger gap = faster speed
+    gap_size = end_i - start_i
+    steering_magnitude = abs(steering_angle)
+
+    # Speed calculation
+    if steering_magnitude &lt; np.deg2rad(10):
+        # Small steering -&gt; high speed
+        speed = self.speed_max
+    elif steering_magnitude &lt; np.deg2rad(20):
+        # Medium steering -&gt; medium speed
+        speed = (self.speed_min + self.speed_max) / 2
+    else:
+        # Large steering -&gt; low speed
+        speed = self.speed_min
+
+    # Also consider gap size
+    # Smaller gap -&gt; slower speed
+    min_safe_gap = 50  # minimum indices for full speed
+    if gap_size &lt; min_safe_gap:
+        speed = speed * (gap_size / min_safe_gap)
+        speed = max(speed, self.speed_min)  # Don't go below minimum
+
+    # Publish drive command
+    self.publish_drive(steering_angle, speed)
+
+    # Debug logging
+    self.get_logger().info(
+        f'Gap: [{start_i}:{end_i}] | Best: {best_idx} | '
+        f'Angle: {np.rad2deg(steering_angle):.1f}° | Speed: {speed:.2f} m/s',
+        throttle_duration_sec=0.5)
+</code></pre>
+<hr />
+<h2 id="part-4-configuration-and-launch-files">Part 4: Configuration and Launch Files<a class="headerlink" href="#part-4-configuration-and-launch-files" title="Permanent link">&para;</a></h2>
+<h3 id="step-41-create-parameter-file">Step 4.1: Create Parameter File<a class="headerlink" href="#step-41-create-parameter-file" title="Permanent link">&para;</a></h3>
+<p><strong>File:</strong> <code>~/ros2_ws/src/follow_the_gap/config/gap_params.yaml</code></p>
+<pre><code class="language-yaml"># Follow the Gap Parameters
+
+reactive_node:
+  ros__parameters:
+    # Safety bubble radius around closest obstacle (meters)
+    # Larger = more conservative, smaller gaps ignored
+    bubble_radius: 0.3
+
+    # Preprocessing window size for moving average
+    # Larger = smoother but less responsive
+    preprocess_conv_size: 3
+
+    # Maximum LiDAR range to consider (meters)
+    # Points beyond this are treated as max range
+    max_lidar_range: 3.0
+
+    # Speed limits (m/s)
+    speed_min: 0.5
+    speed_max: 2.0
+
+    # Steering gain (proportional control)
+    # Higher = more aggressive steering
+    steering_gain: 1.0
+</code></pre>
+<h3 id="step-42-create-launch-file">Step 4.2: Create Launch File<a class="headerlink" href="#step-42-create-launch-file" title="Permanent link">&para;</a></h3>
+<p><strong>File:</strong> <code>~/ros2_ws/src/follow_the_gap/launch/follow_gap.launch.py</code></p>
+<pre><code class="language-python">#!/usr/bin/env python3
+
+import os
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+from ament_index_python.packages import get_package_share_directory
+
+
+def generate_launch_description():
+    &quot;&quot;&quot;
+    Launch Follow the Gap node
+    &quot;&quot;&quot;
+
+    # Get package directory
+    pkg_dir = get_package_share_directory('follow_the_gap')
+    params_file = os.path.join(pkg_dir, 'config', 'gap_params.yaml')
+
+    # Declare launch arguments
+    bubble_radius_arg = DeclareLaunchArgument(
+        'bubble_radius',
+        default_value='0.3',
+        description='Safety bubble radius (meters)'
+    )
+
+    speed_max_arg = DeclareLaunchArgument(
+        'speed_max',
+        default_value='2.0',
+        description='Maximum speed (m/s)'
+    )
+
+    steering_gain_arg = DeclareLaunchArgument(
+        'steering_gain',
+        default_value='1.0',
+        description='Steering proportional gain'
+    )
+
+    # Reactive node
+    reactive_node = Node(
+        package='follow_the_gap',
+        executable='reactive_node',
+        name='reactive_node',
+        output='screen',
+        emulate_tty=True,
+        parameters=[
+            params_file,
+            {
+                'bubble_radius': LaunchConfiguration('bubble_radius'),
+                'speed_max': LaunchConfiguration('speed_max'),
+                'steering_gain': LaunchConfiguration('steering_gain'),
+            }
+        ]
+    )
+
+    return LaunchDescription([
+        bubble_radius_arg,
+        speed_max_arg,
+        steering_gain_arg,
+        reactive_node,
+    ])
+</code></pre>
+<hr />
+<h3 id="step-43-build-the-package">Step 4.3: Build the Package<a class="headerlink" href="#step-43-build-the-package" title="Permanent link">&para;</a></h3>
+<pre><code class="language-bash">cd ~/ros2_ws
+colcon build --packages-select follow_the_gap
+source install/setup.bash
+</code></pre>
+<hr />
+<h2 id="part-5-testing-in-simulator">Part 5: Testing in Simulator<a class="headerlink" href="#part-5-testing-in-simulator" title="Permanent link">&para;</a></h2>
+<h3 id="step-51-launch-system">Step 5.1: Launch System<a class="headerlink" href="#step-51-launch-system" title="Permanent link">&para;</a></h3>
+<p><strong>Terminal 1 - Simulator:</strong></p>
+<pre><code class="language-bash">ros2 launch f1tenth_gym_ros gym_bridge_launch.py
+</code></pre>
+<p><strong>Terminal 2 - Follow the Gap:</strong></p>
+<pre><code class="language-bash">source ~/ros2_ws/install/setup.bash
+ros2 launch follow_the_gap follow_gap.launch.py
+</code></pre>
+<h3 id="step-52-initial-observations">Step 5.2: Initial Observations<a class="headerlink" href="#step-52-initial-observations" title="Permanent link">&para;</a></h3>
+<p><strong>Watch for:</strong>
+- ✅ Car starts moving forward
+- ✅ Car avoids walls/obstacles
+- ✅ Car finds and navigates through gaps
+- ✅ Smooth steering behavior</p>
+<p><strong>Common Issues:</strong>
+- Car spins in place → steering_gain too high
+- Car hits walls → bubble_radius too small
+- Car too slow → increase speed_max
+- Jerky motion → increase preprocess_conv_size</p>
+<h3 id="step-53-monitor-and-debug">Step 5.3: Monitor and Debug<a class="headerlink" href="#step-53-monitor-and-debug" title="Permanent link">&para;</a></h3>
+<p><strong>Terminal 3 - Monitor Topics:</strong></p>
+<pre><code class="language-bash"># Check drive commands
+ros2 topic echo /drive
+
+# Check LiDAR data
+ros2 topic hz /scan
+
+# Monitor node
+ros2 node info /reactive_node
+</code></pre>
+<p><strong>Terminal 4 - RViz Visualization:</strong></p>
+<pre><code class="language-bash">rviz2
+</code></pre>
+<p><strong>Configure RViz:</strong>
+1. Fixed Frame: <code>ego_racecar/base_link</code>
+2. Add LaserScan
+   - Topic: <code>/scan</code>
+   - Color: Rainbow by range
+   - Size: 0.05
+3. Add RobotModel
+4. Add TF</p>
+<p><strong>Observe in RViz:</strong>
+- LiDAR scans showing gaps
+- Car's heading toward best point
+- Safety bubble effect (implicitly through behavior)</p>
+<hr />
+<h2 id="part-6-advanced-improvements">Part 6: Advanced Improvements<a class="headerlink" href="#part-6-advanced-improvements" title="Permanent link">&para;</a></h2>
+<h3 id="step-61-add-gap-quality-metric">Step 6.1: Add Gap Quality Metric<a class="headerlink" href="#step-61-add-gap-quality-metric" title="Permanent link">&para;</a></h3>
+<p>Improve best point selection by considering gap quality:</p>
+<pre><code class="language-python">def find_best_point(self, start_i, end_i, ranges):
+    &quot;&quot;&quot;
+    Enhanced best point selection considering gap depth and width
+    &quot;&quot;&quot;
+    if start_i &gt;= end_i or end_i &gt;= len(ranges):
+        return len(ranges) // 2
+
+    gap_ranges = ranges[start_i:end_i+1]
+
+    # Calculate gap quality metrics
+    gap_width = end_i - start_i
+    gap_max_depth = np.max(gap_ranges)
+    gap_avg_depth = np.mean(gap_ranges)
+
+    # Weighted selection
+    # Favor deeper and wider gaps
+    if gap_width &gt; 100 and gap_avg_depth &gt; 2.0:
+        # Large, deep gap -&gt; aim for furthest point
+        best_idx = start_i + np.argmax(gap_ranges)
+    elif gap_width &lt; 50:
+        # Narrow gap -&gt; aim for center for safety
+        best_idx = (start_i + end_i) // 2
+    else:
+        # Medium gap -&gt; balanced approach
+        furthest_idx = start_i + np.argmax(gap_ranges)
+        centered_idx = (start_i + end_i) // 2
+        best_idx = int(0.7 * furthest_idx + 0.3 * centered_idx)
+
+    return best_idx
+</code></pre>
+<h3 id="step-62-add-disparity-extender">Step 6.2: Add Disparity Extender<a class="headerlink" href="#step-62-add-disparity-extender" title="Permanent link">&para;</a></h3>
+<p>Handle sharp transitions in LiDAR data (e.g., corners of obstacles):</p>
+<pre><code class="language-python">def extend_disparities(self, ranges, threshold=0.5):
+    &quot;&quot;&quot;
+    Extend safety regions around sharp disparities in range data.
+    Helps with corners and edges of obstacles.
+
+    Args:
+        ranges: array of LiDAR ranges
+        threshold: minimum disparity to trigger extension (meters)
+
+    Returns:
+        extended_ranges: ranges with extended disparities
+    &quot;&quot;&quot;
+    extended_ranges = ranges.copy()
+
+    # Find disparities (large jumps in consecutive ranges)
+    disparities = np.abs(np.diff(ranges))
+
+    # Find where disparities exceed threshold
+    disparity_indices = np.where(disparities &gt; threshold)[0]
+
+    # For each disparity, set nearby points to the closer value
+    for idx in disparity_indices:
+        # Determine which side is closer
+        if ranges[idx] &lt; ranges[idx + 1]:
+            # Left side is closer, extend left value to the right
+            closer_value = ranges[idx]
+            extend_start = idx + 1
+            extend_end = min(idx + 10, len(ranges))  # Extend 10 indices
+            extended_ranges[extend_start:extend_end] = closer_value
+        else:
+            # Right side is closer, extend right value to the left
+            closer_value = ranges[idx + 1]
+            extend_start = max(0, idx - 10)
+            extend_end = idx + 1
+            extended_ranges[extend_start:extend_end] = closer_value
+
+    return extended_ranges
+</code></pre>
+<p>Add to lidar_callback after preprocessing:</p>
+<pre><code class="language-python"># After preprocessing
+proc_ranges = self.preprocess_lidar(ranges)
+
+# Apply disparity extender
+proc_ranges = self.extend_disparities(proc_ranges)
+</code></pre>
+<h3 id="step-63-add-dynamic-bubble-radius">Step 6.3: Add Dynamic Bubble Radius<a class="headerlink" href="#step-63-add-dynamic-bubble-radius" title="Permanent link">&para;</a></h3>
+<p>Adjust bubble size based on speed:</p>
+<pre><code class="language-python">def __init__(self):
+    # ... existing code ...
+    self.current_speed = 0.0  # Track current speed
+
+def get_bubble_indices(self, data, closest_idx, closest_distance):
+    &quot;&quot;&quot;
+    Dynamic bubble radius based on current speed
+    &quot;&quot;&quot;
+    # Scale bubble radius with speed (reaction time)
+    # Higher speed = larger bubble needed
+    dynamic_radius = self.bubble_radius * (1.0 + self.current_speed / self.speed_max)
+
+    if closest_distance == 0:
+        closest_distance = 0.1
+
+    bubble_angle = dynamic_radius / closest_distance
+    angle_increment = data.angle_increment
+    bubble_idx_range = int(np.ceil(bubble_angle / angle_increment))
+
+    start_idx = max(0, closest_idx - bubble_idx_range)
+    end_idx = min(len(data.ranges) - 1, closest_idx + bubble_idx_range)
+
+    return np.arange(start_idx, end_idx + 1)
+
+def publish_drive(self, steering_angle, speed):
+    &quot;&quot;&quot;
+    Track current speed for dynamic bubble
+    &quot;&quot;&quot;
+    self.current_speed = speed
+
+    drive_msg = AckermannDriveStamped()
+    drive_msg.header.stamp = self.get_clock().now().to_msg()
+    drive_msg.header.frame_id = 'base_link'
+    drive_msg.drive.steering_angle = float(steering_angle)
+    drive_msg.drive.speed = float(speed)
+
+    self.drive_pub.publish(drive_msg)
+</code></pre>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<h3 id="what-we-learned">What We Learned:<a class="headerlink" href="#what-we-learned" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Reactive Control:</strong></li>
+<li>Real-time obstacle avoidance</li>
+<li>No mapping or planning required</li>
+<li>
+<p>Fast response to dynamic environments</p>
+</li>
+<li>
+<p><strong>LiDAR Processing:</strong></p>
+</li>
+<li>Filtering and smoothing</li>
+<li>Range limiting</li>
+<li>
+<p>Disparity handling</p>
+</li>
+<li>
+<p><strong>Gap Detection:</strong></p>
+</li>
+<li>Finding free space</li>
+<li>Safety bubble creation</li>
+<li>
+<p>Gap quality assessment</p>
+</li>
+<li>
+<p><strong>Target Selection:</strong></p>
+</li>
+<li>Balancing safety and progress</li>
+<li>Considering gap characteristics</li>
+<li>
+<p>Speed adaptation</p>
+</li>
+<li>
+<p><strong>ROS2 Implementation:</strong></p>
+</li>
+<li>Real-time sensor processing</li>
+<li>Parameter tuning</li>
+<li>Performance monitoring</li>
+</ol>
+<h3 id="key-takeaways-for-autonomous-racing">Key Takeaways for Autonomous Racing:<a class="headerlink" href="#key-takeaways-for-autonomous-racing" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reactive methods are fast</strong> - No computation overhead</li>
+<li><strong>Complementary to planning</strong> - Can be combined with higher-level strategies</li>
+<li><strong>Parameter sensitive</strong> - Tuning is critical for performance</li>
+<li><strong>Works in unknown environments</strong> - No prior map needed</li>
+<li><strong>Handles dynamic obstacles</strong> - Naturally adapts to changes</li>
+</ul>
+<hr />
+<h2 id="troubleshooting-guide">Troubleshooting Guide<a class="headerlink" href="#troubleshooting-guide" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Car doesn't move</td>
+<td>No valid gaps found</td>
+<td>Check preprocessing, reduce bubble_radius</td>
+</tr>
+<tr>
+<td>Hits obstacles</td>
+<td>Bubble too small</td>
+<td>Increase bubble_radius</td>
+</tr>
+<tr>
+<td>Spins in place</td>
+<td>Steering too aggressive</td>
+<td>Reduce steering_gain</td>
+</tr>
+<tr>
+<td>Too slow</td>
+<td>Speed limits too low</td>
+<td>Increase speed_max</td>
+</tr>
+<tr>
+<td>Jerky steering</td>
+<td>Noisy LiDAR data</td>
+<td>Increase preprocess_conv_size</td>
+</tr>
+<tr>
+<td>Prefers one side</td>
+<td>Asymmetric best point selection</td>
+<td>Check find_best_point logic</td>
+</tr>
+<tr>
+<td>Stops frequently</td>
+<td>Max gap not found</td>
+<td>Debug find_max_gap, check for zeros</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="practice">Practice<a class="headerlink" href="#practice" title="Permanent link">&para;</a></h1>
+<h2 id="obstacle-avoidance-with-follow-the-gap">Obstacle Avoidance with Follow the Gap<a class="headerlink" href="#obstacle-avoidance-with-follow-the-gap" title="Permanent link">&para;</a></h2>
+<h3 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h3>
+<p>Create a ROS 2 node that implement the follow the gap technique using LaserScan data and publish drive commands. Tune it for a provided map/track so the vehicle can complete one full lap without crashing as fast as possible.</p>
+<h2 id="overview_1">Overview<a class="headerlink" href="#overview_1" title="Permanent link">&para;</a></h2>
+<p>You will:</p>
+<ol>
+<li>Implement Follow the Gap technique.</li>
+<li>Fine tune controller to make the vehicle as fast as possible while avoiding obstacles.</li>
+<li>Write a launch file that starts both the simulation and the gap follow node.</li>
+<li>Document and note the parameters you used and for what speed or set of speeds it is fined tuned for (can put in README file)</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "toc.integrate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
